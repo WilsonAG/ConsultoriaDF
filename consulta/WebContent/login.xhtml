@@ -1,0 +1,50 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+      >
+
+	 <h:head>
+		<title>Consultores asociados</title>
+		<style>
+<!--
+fondo de pantalla 
+-->
+ 
+</style>
+	 </h:head>
+	<body style="background-color:#7C8585;" >
+<h:form>
+    <h:panelGrid columns="2" cellpadding="5">
+    <h:outputText value="Usuario o correo " /> 
+    
+       <p:inputText id="email" required="true" label="email" size="40"
+		requiredMessage="Please enter your email address."
+		validatorMessage="Invalid email format"
+		value="#">
+
+	  <f:validateRegex
+		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+	</p:inputText>
+        
+        <h:outputText value="Contrasenia: " />
+        <p:password id="inlineFeedback" value="#" feedback="true" inline="true" />
+    </h:panelGrid>
+     
+    <p:spacer height="10" />
+     
+    <p:separator />
+     
+ <p:commandButton value="Ingresar" style="margin:20px"
+		action="#s"  ajax="false" />  
+ 
+
+ </h:form>
+  <p:commandButton value="Regresar" onclick="window.history.back();" type="button" ajax="false" />
+ 	</body>
+
+	
+
+</html>

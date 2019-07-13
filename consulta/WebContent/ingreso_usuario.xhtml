@@ -1,0 +1,99 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+      >
+
+	 <h:head>
+		<title>Consultores asociados</title>
+		<style>
+<!--
+fondo de pantalla 
+-->
+ 
+</style>
+	 </h:head>
+	<body style="background-color:#7C8585;" >
+<div class="form-style-10" style="text-align: center">
+		<h1 style="text-align: center">
+			Registrate ahora !<span>Registrate y accede a todas las
+				posibilidades que ofrecemos!</span>
+		</h1>
+		
+		
+		
+		<style type="text/css">
+    .ui-datalist .ui-datalist-content {
+        border:0 none
+    }
+     
+    .ui-datalist ul {
+        padding: 0px 10px 0 20px;
+        margin: 5px 0;
+    }
+     
+    .value {
+        font-weight: bold;
+    }
+     
+    .ui-autocomplete-itemtip {
+        -moz-box-sizing: content-box;
+        -webkit-box-sizing: content-box;
+        box-sizing: content-box;
+    }
+</style>
+
+<h:form id="form">
+    <p:panel id="panel" header="Registro" style="margin-bottom:10px;">
+        <p:messages id="messages" />
+        <h:panelGrid columns="3" cellpadding="5">
+ 
+            <p:outputLabel for="nombre" value="Nombre:" />
+            <p:inputText id="nombre" value="#{resetInputView.text1}" required="true" label="nombre">
+                <f:validateLength minimum="2" />
+            </p:inputText>
+            <p:message for="nombre" />
+ 
+            <p:outputLabel for="apellido" value="Apellido:" />
+            <p:inputText id="apellido" value="#{resetInputView.text2}" required="true" label="apellido"/>
+            <p:message for="apellido" />
+            
+            <p:outputLabel for="correo" value="Correo" />
+            <p:inputText id="correo" value="#{resetInputView.text2}" required="true" label="Surname"/>
+            <p:message for="correo" />
+            
+            <h:outputText value="Clave : " />
+        <p:password id="clave" value="#{passwordView.password3}" feedback="true"
+                    promptLabel="ingrese clave" weakLabel="debil"
+                    goodLabel="buena" strongLabel="Fuerte" />
+ 
+     
+            
+            
+        </h:panelGrid>
+    </p:panel>
+    
+    <p:toolbar>
+        <f:facet name="left">
+            <p:commandButton value="Enviar" update="panel" action="#{resetInputView.save}" style="margin-right:20px;" />
+        </f:facet>
+         
+        <f:facet name="right">
+            
+            
+ 
+            <h:commandButton value="Borrar campos" style="margin-right:20px;" >
+                <p:ajax update="panel" resetValues="true" />
+            </h:commandButton>
+        </f:facet>
+    </p:toolbar>
+    <center><p:imageCompare leftImage="/resources/images/1.jpg"
+                rightImage="/resources/images/B55.jpg"
+                width="400" height="200"/></center> 
+</h:form>
+ 
+ 
+</div>
+			</body>
+			</html>

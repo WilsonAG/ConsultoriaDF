@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+      >
+
+	 <h:head>
+		<title>Consulta base </title>
+		<style type="text/css">
+    .value {
+        font-weight: bold;
+    }
+</style>
+	 </h:head>
+	<body style="background-color:#7C8585;" >
+	
+		<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar>
+ 		  <p:menuitem value="Inicio" url="/index.jsf" icon="pi pi-times" />    
+ 		    <p:menuitem value="Informacion" url="/informacion.jsf" icon="pi pi-times" />  
+ 		      <p:menuitem value="Consultas" url="/inicio.jsf" icon="pi pi-times" /> 
+ 		        <p:menuitem value="Acerca de" url="/informacion.jsf" icon="pi pi-times" />
+ 
+        <p:menuitem value="Quit" url="/informacion.jsf" icon="pi pi-times" />
+ 
+        <f:facet name="options">
+            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
+           <h:button value="LogIn" outcome="/login.jsf"  icon="pi pi-home" />
+        </f:facet>
+    </p:menubar>
+    <h:form>
+    <h2 style="margin-top:0">Consulta Respecto a la madre </h2>
+    <h3 style="margin-top:0"><center>Seleccionar periodo de analisis</center> </h3>
+    <h4>Periodo de analisis tiempo:</h4>
+    
+    
+   <table class="egt" >
+
+  <tr>
+
+    <th>Periodo de analisis tiempo </th>
+
+    <th>                Ubicacion </th>
+
+    <th> </th>
+    <th> Eje de analisis </th>
+
+  </tr>
+
+  <tr>
+
+    <td><h:panelGrid columns="2" style="margin-bottom:8px" cellpadding="2">
+        <p:outputLabel for="console" value="años:" />
+        <p:selectOneRadio id="console" value="#{radioView.console}" unselectable="true">
+            <f:selectItem itemLabel="2015" itemValue="2015" />
+            <f:selectItem itemLabel="2016" itemValue="2016" />   
+        </p:selectOneRadio>
+    </h:panelGrid> </td>
+
+    <td><p:outputLabel value="Provincia" />
+    <td>
+		<p:selectOneMenu >
+     <f:selectItems value="#{select.Trimestre}"/>
+	 </p:selectOneMenu></td></td>
+
+    <td><p:outputLabel value="Estado civil" />
+		<p:selectOneMenu >
+     <f:selectItems value="#{select.Trimestre}"/>
+	 </p:selectOneMenu></td>
+
+  </tr>
+
+  <tr>
+
+    <td><p:outputLabel value="Trimestre" />
+		<p:selectOneMenu >
+     <f:selectItems value="#{select.Trimestre}"/>
+	 </p:selectOneMenu></td>
+
+    <td><p:outputLabel value="Canton" />
+		<td><p:selectOneMenu >
+     <f:selectItems value="#{select.Trimestre}"/>
+	 </p:selectOneMenu></td></td>
+
+    
+
+  </tr>
+
+  <tr>
+
+    <td> </td>
+
+    <td><p:outputLabel value="Parroquia" />
+		<td><p:selectOneMenu >
+     <f:selectItems value="#{select.Trimestre}"/>
+	 </p:selectOneMenu></td></td>
+
+    
+
+  </tr>
+
+</table>
+    
+    
+  
+ 	<h3>Muestra de los datos:</h3>
+ 	<p:dataTable var="car" value="#{dtBasicView.cars}">
+    <p:column headerText="trimestre">
+        <h:outputText value="#{car.id}" />
+    </p:column>
+ 
+    <p:column headerText="anio">
+        <h:outputText value="#{car.year}" />
+    </p:column>
+ 
+    <p:column headerText="estado civil">
+        <h:outputText value="#{car.brand}" />
+    </p:column>
+ 
+    <p:column headerText="Numero total ">
+        <h:outputText value="#{car.color}" />
+    </p:column>
+	</p:dataTable>
+ 	<ls></ls>
+ <h3>Graficas de los datos:</h3>
+ 		
+ <h2><center>Vistas Materializadas </center> </h2>
+ 
+ 
+</h:form>
+	</h:form>
+	</body>
+</html>
