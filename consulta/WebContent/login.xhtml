@@ -16,29 +16,32 @@ fondo de pantalla
 	 </h:head>
 	<body style="background-color:#7C8585;" >
 <h:form>
-    <h:panelGrid columns="2" cellpadding="5">
-    <h:outputText value="Usuario o correo " /> 
-    
-       <p:inputText id="email" required="true" label="email" size="40"
-		requiredMessage="Please enter your email address."
-		validatorMessage="Invalid email format"
-		value="#">
-
-	  <f:validateRegex
-		pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-
-	</p:inputText>
-        
-        <h:outputText value="Contrasenia: " />
-        <p:password id="inlineFeedback" value="#" feedback="true" inline="true" />
+	<p:tooltip />
+	<p:messages closable="true" showDetail="true">
+		<p:autoUpdate />
+	</p:messages>
+    <h:panelGrid columns="2" cellpadding="5" id="grid">
+	    <h:outputText value="Usuario o correo " />     
+	    <p:inputText id="email" required="true" label="email" size="40"
+			requiredMessage="Porfavor ingresa tu direccion de correo."
+			validatorMessage="Formato de correo no valido"
+			value="#{login.user.email}">
+	
+		<f:validateRegex
+			pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+	
+		</p:inputText>
+	        
+	        <h:outputText value="Contrasenia: " />
+	        <p:password id="inlineFeedback" value="#{login.user.password}" feedback="true" inline="true" />
     </h:panelGrid>
      
     <p:spacer height="10" />
      
     <p:separator />
      
- <p:commandButton value="Ingresar" style="margin:20px"
-		action="#s"  ajax="false" />  
+	 <p:commandButton value="Ingresar" style="margin:20px"
+			action="#{login.iniciarSesion()}"  icon="ui-icon-key" update="grid"/>  
  
 
  </h:form>
