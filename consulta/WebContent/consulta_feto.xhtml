@@ -12,27 +12,32 @@
         font-weight: bold;
     }
 </style>
+ <link rel="stylesheet" href="resources/estilo.css"/>
+
 	 </h:head>
 	<body style="background-color:#7C8585;" >
 	
 		<h:form>  
     <p:growl id="messages"/>
  
-    <p:menubar>
- 		  <p:menuitem value="Inicio" url="/index.jsf" icon="pi pi-times" />    
- 		    <p:menuitem value="Informacion" url="/informacion.jsf" icon="pi pi-times" />  
- 		      <p:menuitem value="Consultas" url="/inicio.jsf" icon="pi pi-times" /> 
- 		        <p:menuitem value="Acerca de" url="/informacion.jsf" icon="pi pi-times" />
+   <p:menubar>
+ 		  <p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />    
+ 		    <p:menuitem value="Informacion" url="informacion.jsf" icon="pi pi-times" />  
+ 		      <p:submenu label="Consultas">
+                <p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
+                <p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+            </p:submenu>
  
-        <p:menuitem value="Quit" url="/informacion.jsf" icon="pi pi-times" />
+        <p:menuitem value="Quit" url="informacion.jsf" icon="pi pi-times" />
  
         <f:facet name="options">
-            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-           <h:button value="LogIn" outcome="/login.jsf"  icon="pi pi-home" />
+            <p:inputText style=" width: 200px ; height: 20px;" placeholder="Search"/>
+           <h:button value="LogIn" outcome="login.jsf"  icon="pi pi-home" />
+           <h:button value="Registrarse" outcome="ingreso_usuario.jsf"  icon="pi pi-home" />
         </f:facet>
     </p:menubar>
     <h:form>
-    <h2 style="margin-top:0">Consulta Respecto al feto </h2>
+    <h2 style="margin-top:0">Consulta Respecto a la madre </h2>
     <h3 style="margin-top:0"><center>Seleccionar periodo de analisis</center> </h3>
     <h4>Periodo de analisis tiempo:</h4>
     
@@ -61,12 +66,12 @@
     </h:panelGrid> </td>
 
     <td><p:outputLabel value="Provincia" />
-    
+    <td>
 		<p:selectOneMenu >
      <f:selectItems value="#{select.Trimestre}"/>
-	 </p:selectOneMenu></td>
+	 </p:selectOneMenu></td></td>
 
-    <td><p:outputLabel value="Causa que no se :V" />
+    <td><p:outputLabel value="Causa Fetal" />
 		<p:selectOneMenu >
      <f:selectItems value="#{select.Trimestre}"/>
 	 </p:selectOneMenu></td>
@@ -81,9 +86,9 @@
 	 </p:selectOneMenu></td>
 
     <td><p:outputLabel value="Canton" />
-		<p:selectOneMenu >
+		<td><p:selectOneMenu >
      <f:selectItems value="#{select.Trimestre}"/>
-	 </p:selectOneMenu></td>
+	 </p:selectOneMenu></td></td>
 
     
 
@@ -116,7 +121,7 @@
         <h:outputText value="#{car.year}" />
     </p:column>
  
-    <p:column headerText="causa que no se :v">
+    <p:column headerText="Causa Fetal">
         <h:outputText value="#{car.brand}" />
     </p:column>
  
@@ -124,7 +129,7 @@
         <h:outputText value="#{car.color}" />
     </p:column>
 	</p:dataTable>
- 
+ 	
  <h3>Graficas de los datos:</h3>
  		
  <h2><center>Vistas Materializadas </center> </h2>

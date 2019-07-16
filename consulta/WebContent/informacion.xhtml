@@ -13,25 +13,131 @@ fondo de pantalla
 -->
  
 </style>
+ <link rel="stylesheet" href="resources/estilo.css"/>
 	 </h:head>
 	<body style="background-color:#7C8585;" >
 	
 	<p:menubar>
  		  <p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />    
  		    <p:menuitem value="Informacion" url="informacion.jsf" icon="pi pi-times" />  
- 		      <p:menuitem value="Consultas" url="inicio.jsf" icon="pi pi-times" /> 
- 		        <p:menuitem value="Acerca de" url="informacion.jsf" icon="pi pi-times" />
+ 		      <p:submenu label="Consultas">
+                <p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
+                <p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+            </p:submenu>
  
         <p:menuitem value="Quit" url="informacion.jsf" icon="pi pi-times" />
  
         <f:facet name="options">
-            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
+            <p:inputText style=" width: 200px ; height: 20px;" placeholder="Search"/>
            <h:button value="LogIn" outcome="login.jsf"  icon="pi pi-home" />
+           <h:button value="Registrarse" outcome="ingreso_usuario.jsf"  icon="pi pi-home" />
         </f:facet>
     </p:menubar>
 	
-	<h3> Esta es la informacion </h3>
+	<div id="header">
+		<div id="logo">
+			<h1><a style="text-decoration: underline;" href="#">Informacion General </a></h1>
+			<p>Este proyecto se realizo de forma que  se muestren los conocimiento adquiridos durante todo el semestre e incorporarlo a un proyecto en donde las materia de Software Libre, Sistemas de Informacion y Base de datos forman y presentan un sistema de consultas para analisis en base a datos publicos proporcionados intervienen a mas de otros factores como los siguientes:  </p>
+		</div>
+	</div>
+	<!-- end #cabecera -->
+	<div id="page">
+		<div id="content">
+			<div class="post">
+
+				<div class="entry">
+					<p>  </p></div>
+			</div>
+			<div class="post">
+				<h2 class="title"><a href="#">Universidad Politecnica Salesiana</a></h2>
+				<div class="entry">
+                            <p> La Universidad Politécnica Salesiana es una institución de educación superior humanística y politécnica, de inspiración cristiana con carácter católico e índole salesiana; dirigida de manera preferencial a jóvenes de los sectores populares; busca formar "honrados ciudadanos y buenos cristianos", con excelencia humana y académica, con capacidad investigativa e innovadora, que contribuyan al desarrollo sostenible local y nacional. Este contenido ha sido publicado originalmente por Universidad Politécnica Salesiana del Ecuador en la siguiente dirección: https://www.ups.edu.ec/razon-de-ser. Si está pensando en hacer uso del mismo, cite la fuente y haga un enlace hacia la nota original donde usted ha tomado este contenido. www.ups.edu.ec
+					<div class="post">
+						<h2 class="title"><a href="#">Carrera Ingenieria en Ciencias de la Computacion</a></h2>
+						<div class="entry">
+                        <p> Formar Ingenieros e Ingenieras en Computación con una sólida base de conocimiento técnico y científico sustentada en un enfoque humanista y de responsabilidad ética y social, capaces de liderar innovar y desarrollar respuestas tecnológicas que permitan contribuir a la búsqueda de soluciones para problemas de la sociedad y el desarrollo del país, alineado a estándares de calidad nacionales e internacionales.  Este contenido ha sido publicado originalmente por Universidad Politécnica Salesiana del Ecuador en la siguiente dirección: https://www.ups.edu.ec/computacion-quito. Si está pensando en hacer uso del mismo, cite la fuente y haga un enlace hacia la nota original donde usted ha tomado este contenido. www.ups.edu.ec
+</p>
+						</div>
+					</div>
+					</p>
+				</div>
+			</div>
+			<div style="clear: both;">&nbsp;</div>
+		</div>
+		<!-- end #contenido -->
+		<div id="sidebar">
+			<ul>
+				<li>
+					<h2>Objetivo Grupal:</h2>
+					<p>Poner a disposicion de las futuras generaciones la disponibilidad deel sistema para una implementacion a futuro y posibles cambios que sean necesarios</p>
+				</li>
+				<li>
+					<h2>Desarrolladores</h2>
+					<ul>
+						<li><a href="#">Aguilar Wilson</a></li>
+						<li><a href="#">Baez Henry</a></li>
+						<li><a href="#">Cacuango Gabriel</a></li>
+						<li><a href="#">Chango Carolina</a></li>
+						<li><a href="#">Laverde Pablo</a></li>
+					</ul>
+				</li>
+
+				<li>
+					<h2>Documentacion</h2>
+					<ul>
+						<li><a href="#">Informes</a></li>
+						<li><a href="#">Metodolgia utilizada</a></li>
+						<li><a href="#">Codigos Eclipse</a></li>
+						<li><a href="#">Codigos flask</a></li>
+						<li><a href="#">Codigo SQL  Developer</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!-- end #sidebar -->
+		<div style="clear: both;">&nbsp;</div>
+	</div>
+	<!-- end #pagina -->
 	
-	
+<div id="footer-wrapper">
+	<div id="three-columns">
+		<div id="column1">
+			<h2>Sofware Libre</h2>
+			<ul>
+				<li><a href="https://www.jetbrains.com/pycharm/">Pycharm</a></li>
+				<li><a href="https://palletsprojects.com/p/flask/">Flask</a></li>
+				<li><a href="https://github.com/">GitHub</a></li>
+
+			</ul>
+		</div>
+		<div id="column2">
+			<h2>Base de Datos</h2>
+			<ul>
+				<li><a href="https://www.oracle.com/database/technologies/appdev/sql-developer.html">SQL Developer </a></li>
+				<li><a href="https://www.ecuadorencifras.gob.ec/ecuador-en-cifras/">Ecuador en cifras </a></li>
+				<li><a href="https://www.ecuadorencifras.gob.ec/banco-de-informacion/">Banco de datos defunciones</a></li>
+
+				<li><a href="https://www.oracle.com/technetwork/es/database/express-edition/overview/index.html">Oracle G11</a></li>
+			</ul>
+		</div>
+		<div id="column3">
+			<h2>Sistemas de Informacion</h2>
+			<ul>
+				<li><a href="https://www.eclipse.org/">Eclipse IDE </a></li>
+				<li><a href="https://www.primefaces.org/">PrimeFaces</a></li>
+				<li><a href="https://wildfly.org/">WildFly</a></li>
+				<li><a href="http://www.jboss.org/">JBoss</a></li>
+				<li><a href="https://www.lucidchart.com">Lucichart</a></li>
+				<li><a href="https://www.powtoon.com/home/">Powtoon</a></li>
+				<li><a href="https://trello.com/e">Trello</a></li>
+
+			</ul>
+		</div>
+	</div>
+	<div id="footer">
+		<p>Copyright (c) 2019 . Todos los derechos reservados. Diseniado por <a href="http://www.ups.edu.ec"> CSS Templates</a>.</p>
+	</div>
+	<!-- end #pie de pagina -->
+</div>
 	</body>
 	</html>

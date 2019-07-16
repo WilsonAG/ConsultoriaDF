@@ -78,12 +78,13 @@ fondo de pantalla
         <f:facet name="left">
             <p:commandButton value="Enviar" update="panel" action="#{resetInputView.save}" style="margin-right:20px;" />
         </f:facet>
+        
+       
          
         <f:facet name="right">
-            
-            
- 
             <h:commandButton value="Borrar campos" style="margin-right:20px;" >
+              <p:commandButton value="Regresar" onclick="window.history.back();" type="button" ajax="false" />
+            
                 <p:ajax update="panel" resetValues="true" />
             </h:commandButton>
         </f:facet>

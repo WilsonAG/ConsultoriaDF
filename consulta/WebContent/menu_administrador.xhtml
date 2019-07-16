@@ -19,16 +19,19 @@
     <p:growl id="messages"/>
  
     <p:menubar>
- 		  <p:menuitem value="Inicio" url="/index.jsf" icon="pi pi-times" />    
- 		    <p:menuitem value="Informacion" url="/informacion.jsf" icon="pi pi-times" />  
- 		      <p:menuitem value="Consultas" url="/inicio.jsf" icon="pi pi-times" /> 
- 		        <p:menuitem value="Acerca de" url="/informacion.jsf" icon="pi pi-times" />
+ 		  <p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />    
+ 		    <p:menuitem value="Informacion" url="informacion.jsf" icon="pi pi-times" />  
+ 		      <p:submenu label="Consultas">
+                <p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
+                <p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+            </p:submenu>
  
-        <p:menuitem value="Quit" url="/informacion.jsf" icon="pi pi-times" />
+        <p:menuitem value="Quit" url="informacion.jsf" icon="pi pi-times" />
  
         <f:facet name="options">
-            <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search"/>
-           <h:button value="LogIn" outcome="/login.jsf"  icon="pi pi-home" />
+            <p:inputText style=" width: 200px ; height: 20px;" placeholder="Search"/>
+           <h:button value="LogIn" outcome="login.jsf"  icon="pi pi-home" />
+           <h:button value="Registrarse" outcome="ingreso_usuario.jsf"  icon="pi pi-home" />
         </f:facet>
     </p:menubar>
     <h:form>
