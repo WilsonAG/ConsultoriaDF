@@ -1,65 +1,64 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" 
-      >
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
-	 <h:head>
-		<title>Consulta base </title>
-		<style type="text/css">
-    .value {
-        font-weight: bold;
-    }
+<h:head>
+	<title>Consulta base</title>
+	<style type="text/css">
+.value {
+	font-weight: bold;
+}
 </style>
-	 </h:head>
-	<body style="background-color:#7C8585;" >
-	
-		<h:form>  
-    <p:growl id="messages"/>
- 
-    <p:menubar>
- 		  <p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />    
- 		    <p:menuitem value="Informacion" url="informacion.jsf" icon="pi pi-times" />  
- 		      <p:submenu label="Consultas">
-                <p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
-                <p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
-            </p:submenu>
- 
-        <p:menuitem value="Quit" url="informacion.jsf" icon="pi pi-times" />
- 
-        <f:facet name="options">
-            <p:inputText style=" width: 200px ; height: 20px;" placeholder="Search"/>
-           <h:button value="LogIn" outcome="login.jsf"  icon="pi pi-home" />
-           <h:button value="Registrarse" outcome="ingreso_usuario.jsf"  icon="pi pi-home" />
-        </f:facet>
-    </p:menubar>
-    <h:form>
-   <center><h2 style="color:blue;"> Menu Administrador </h2></center>
-   
-   <center> <table><th><a class="boton_personalizado" href="" style=" text-decoration: none;
-    padding: 10px;
-    font-weight: 600;
-    font-size: 20px;
-    color: #ffffff;
-    background-color: #1883ba;
-    border-radius: 6px;
-    border: 2px solid #0016b0;">Ingresar Usuario</a></th><th>
-     <center> <a class="boton_personalizado" href="" style=" text-decoration: none;
-    padding: 10px;
-    font-weight: 600;
-    font-size: 20px;
-    color: #ffffff;
-    background-color: #1883ba;
-    border-radius: 5px;
-    border: 2px solid #0016b0;">Consultas</a></center>
-    </th></table></center>
-    
-   
-    
- 
- 
-</h:form>
+</h:head>
+<body style="background-color: #7C8585;">
+	<h:form>
+		<p:growl id="messages" />
+
+		<p:menubar>
+			<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
+			<p:menuitem value="Informacion" url="informacion.jsf"
+				icon="pi pi-times" />
+			<p:submenu label="Consultas">
+				<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
+				<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+			</p:submenu>
+
+			<p:menuitem value="Quit" url="informacion.jsf" icon="pi pi-times" />
+
+			<f:facet name="options">
+				<p:inputText style=" width: 200px ; height: 20px;"
+					placeholder="Search" />
+				<h:button value="LogIn" outcome="login.jsf" icon="pi pi-home" />
+				<h:button value="Registrarse" outcome="ingreso_usuario.jsf"
+					icon="pi pi-home" />
+			</f:facet>
+		</p:menubar>
+		<h:form>
+			<center>
+				<h2 style="color: blue;">Menu Administrador</h2>
+			</center>
+
+			<center>
+				<table>
+					<th><a class="boton_personalizado" href=""
+						style="text-decoration: none; padding: 10px; font-weight: 600; font-size: 20px; color: #ffffff; background-color: #1883ba; border-radius: 6px; border: 2px solid #0016b0;">Ingresar
+							Usuario</a></th>
+					<th>
+						<center>
+							<a class="boton_personalizado" href=""
+								style="text-decoration: none; padding: 10px; font-weight: 600; font-size: 20px; color: #ffffff; background-color: #1883ba; border-radius: 5px; border: 2px solid #0016b0;">Consultas</a>
+						</center>
+					</th>
+				</table>
+			</center>
+
+
+
+
+
+		</h:form>
 	</h:form>
-	</body>
+</body>
 </html>

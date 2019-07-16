@@ -3,15 +3,15 @@ package Control;
 import java.io.Serializable;
 
 import javax.annotation.PostConstruct;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
 import Model.Usuario;
 
 @Named("login")
-@ViewScoped
+@SessionScoped
 public class ControlLogin implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -28,7 +28,13 @@ public class ControlLogin implements Serializable{
 			
 			Usuario userBD = user.buscarUsuario(user);			
 			if (userBD != null) {
-				url = "consulta_madre";				
+				url = "menu_administrador.xhtml?faces-redirect=true";		
+				ControlSession.getSession(true);
+				ControlSession.add("nameUser", userBD.getNombre());
+				String n = (String) ControlSession.get("nameUser");
+				String msj = "Bienvenido "+n;
+				FacesContext.getCurrentInstance().addMessage(null, 
+						new FacesMessage(FacesMessage.SEVERITY_INFO, msj, "no se muestra"));
 			}else {
 				FacesContext.getCurrentInstance().addMessage(null, 
 						new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Credenciales incorrectas"));

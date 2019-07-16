@@ -17,7 +17,7 @@ fondo de pantalla
 	<body style="background-color:#7C8585;" >
 <h:form>
 	<p:tooltip />
-	<p:messages closable="true" showDetail="true">
+	<p:messages id="msgs" closable="true" showDetail="true" >
 		<p:autoUpdate />
 	</p:messages>
     <h:panelGrid columns="2" cellpadding="5" id="grid">
@@ -33,7 +33,9 @@ fondo de pantalla
 		</p:inputText>
 	        
 	        <h:outputText value="Contrasenia: " />
-	        <p:password id="inlineFeedback" value="#{login.user.password}" feedback="true" inline="true" />
+	        <p:password id="inlineFeedback" value="#{login.user.password}" feedback="true" inline="true" 
+	        	required="true"
+	        	requiredMessage="Ingrese su clave"/>
     </h:panelGrid>
      
     <p:spacer height="10" />
@@ -41,7 +43,7 @@ fondo de pantalla
     <p:separator />
      
 	 <p:commandButton value="Ingresar" style="margin:20px"
-			action="#{login.iniciarSesion()}"  icon="ui-icon-key" update="grid"/>  
+			action="#{login.iniciarSesion()}"  icon="ui-icon-key"/>  
  
 
  </h:form>
