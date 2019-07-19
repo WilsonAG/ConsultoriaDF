@@ -39,7 +39,7 @@ body {
 	padding: 0;
 	background: #00340B url(images/img01.jpg) repeat-x left top repeat-y left top;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 14px;
+	font-size: 28px;
 	color: #000000;
 }
 
@@ -199,7 +199,7 @@ img.aligncenter {
 	text-decoration: none;
 	text-transform: uppercase;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
+	font-size: 22px;
 	font-weight: normal;
 	color: #093290;
 }
@@ -258,7 +258,7 @@ img.aligncenter {
 	padding: 5px 0px;
 	text-align: left;
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
+	font-size: 22px;
 	font-style: italic;
 }
 
@@ -278,7 +278,7 @@ img.aligncenter {
 	background: #A53602;
 	text-align: center;
 	text-transform: uppercase;
-	font-size: 14px;
+	font-size: 22px;
 	color: #093290;
 }
 
@@ -316,7 +316,7 @@ img.aligncenter {
 	display: block;
 	margin-top: -20px;
 	padding: 0;
-	font-size: 11px;
+	font-size: 22px;
 	font-style: italic;
 }
 
@@ -387,7 +387,7 @@ img.aligncenter {
 	margin: 0;
 	padding: 100px 0px 0px 0px;
 	line-height: normal;
-	font-size: 10px;
+	font-size: 22px;
 	text-transform: uppercase;
 	text-align: center;
 	color: #61544B;
@@ -422,7 +422,7 @@ img.aligncenter {
 
 #three-columns h2 {
  	padding: 0px 0px 20px 0px;
-	font-size: 28px;
+	font-size: 50px;
 	color: #FFFFFF;
 }
 
@@ -480,4 +480,14 @@ tfoot {
    color: #555;
    font-size: 0.8em;
 }
+menu {
+	
+	font-size: 22px;
+	color: red ;
+}
 
+#menu {
+	
+	font-size: 22px;
+	color: red ;
+}

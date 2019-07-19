@@ -20,18 +20,18 @@ fondo de pantalla
 <h:form>  
     <p:growl id="messages"/>
  
-    <p:menubar>
- 		  <p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />    
+    <p:menubar id="menu">
+ 		  <p:menuitem  value="Inicio" url="index.jsf" icon="pi pi-times" />    
  		    <p:menuitem value="Informacion" url="informacion.jsf" icon="pi pi-times" />  
  		      <p:submenu label="Consultas">
                 <p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
                 <p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
             </p:submenu>
  
-        <p:menuitem value="Quit" url="informacion.jsf" icon="pi pi-times" />
+       
  
         <f:facet name="options">
-            <p:inputText style=" width: 200px ; height: 20px;" placeholder="Search"/>
+           
            <h:button value="LogIn" outcome="login.jsf"  icon="pi pi-home" />
            <h:button value="Registrarse" outcome="ingreso_usuario.jsf"  icon="pi pi-home" />
         </f:facet>
@@ -42,7 +42,7 @@ fondo de pantalla
 </h:form>
 <table>
 <tr><td>
-<p:graphicImage name="images/1.jpg"  Width="500" Height="313"/>
+<p:graphicImage name="images/1.jpg"  Width="650" Height="500"/>
   </td>
 <td>
 
@@ -54,15 +54,21 @@ fondo de pantalla
             
             <h:outputText
                 value="Este sitio web a sido creado para la consulta de datos a cerca de las defunciones fetales durante los periodos
-                2015 - 2016 en el pais de Ecuador realizado por un equipo de trabajo de la Universidad Politecnica Salesiana." />
+                2015 - 2016 en el pais de Ecuador realizado por un equipo de trabajo de la Universidad Politecnica Salesiana en conjunto con las materias de Sistemas de Informacion, Base de Datos y software Libre " />
         </h:panelGrid>
+        
+        
+        
     </p:fieldset>
+    
+    <h:outputText value="salida"/>
  
 </h:form>
 
 
 </td>
 </tr>
+
 </table>
 <hr style="height: 2px;
   background-color: blue;"  ></hr>
