@@ -25,12 +25,14 @@ pantalla
 		<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
 		<p:menuitem value="Informacion" url="informacion.jsf"
 			icon="pi pi-times" />
-			<p:menuitem value="Consulta" url="consulta_general.jsf"/>
+		<p:submenu label="Consultas">
+			<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
+			<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+		</p:submenu>
 
 
 			<f:facet name="options">
-				<h:button value="LogIn" outcome="login" />
-<!-- 				<p:commandButton value="Logout" action="login.jsf" icon="pi pi-home" /> -->
+				<p:button value="Logout" outcome="#{login.cerrarSesion()}" />
 			</f:facet>
 	</p:menubar>
 

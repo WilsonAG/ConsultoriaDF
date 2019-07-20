@@ -1,0 +1,77 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+      >
+
+	 <h:head>
+		<title>Consultores asociados</title>
+		<style>
+<!--
+fondo de pantalla 
+-->
+ 
+</style>
+ <link rel="stylesheet" href="resources/estilo.css"/>
+
+	 </h:head>
+	<body style="background-color:#7C8585;" >
+<h:form>  
+    <p:growl id="messages"/>
+ 
+    <p:menubar id="menu">
+ 		  <p:menuitem  value="Inicio" url="index.jsf" icon="pi pi-times" />    
+ 		    <p:menuitem value="Informacion" url="informacion.jsf" icon="pi pi-times" />  
+ 		      <p:submenu label="Consultas">
+                <p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
+                <p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+            </p:submenu>
+ 
+       
+ 
+			<f:facet name="options">
+				<p:button value="Logout" outcome="#{login.cerrarSesion()}" />
+			</f:facet>
+    </p:menubar>
+ 
+ 
+ 
+</h:form>
+<table>
+<tr><td>
+<p:graphicImage name="images/1.jpg"  Width="650" Height="500"/>
+  </td>
+<td>
+
+<h:form>
+    <p:growl id="msgs" showDetail="true" />
+ 
+    <p:fieldset legend="Resumen" style="margin-bottom:20px">
+        <h:panelGrid columns="2" cellpadding="5">
+            
+            <h:outputText
+                value="Este sitio web a sido creado para la consulta de datos a cerca de las defunciones fetales durante los periodos
+                2015 - 2016 en el pais de Ecuador realizado por un equipo de trabajo de la Universidad Politecnica Salesiana en conjunto con las materias de Sistemas de Informacion, Base de Datos y software Libre " />
+        </h:panelGrid>
+        
+        
+        
+    </p:fieldset>
+    
+    <h:outputText value="salida"/>
+ 
+</h:form>
+
+
+</td>
+</tr>
+
+</table>
+<hr style="height: 2px;
+  background-color: blue;"  ></hr>
+  <center><h4>Universidad Politecnica Salesiana</h4> </center>
+  <center><h5>Integrantes: Aguilar Wilson, Henry Baez, Gabriel Cacuango,Chango Carolina, Laverde Pablo</h5> </center>
+	
+	</body>
+</html>

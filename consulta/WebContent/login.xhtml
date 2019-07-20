@@ -1,55 +1,78 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" 
-      >
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
-	 <h:head>
-		<title>Consultores asociados</title>
-		<style>
+<h:head>
+	<title>Consultores asociados</title>
+	<style>
 <!--
-fondo de pantalla 
+fondo
+
+de
+ 
+pantalla
+
 -->
- 
 </style>
-	 </h:head>
-	<body style="background-color:#7C8585;" >
-<h:form>
-	<p:tooltip />
-	<p:messages id="msgs" closable="true" showDetail="true" >
-		<p:autoUpdate />
-	</p:messages>
-    <h:panelGrid columns="2" cellpadding="5" id="grid">
-	    <h:outputText value="Usuario o correo " />     
-	    <p:inputText id="email" required="true" label="email" size="40"
-			requiredMessage="Porfavor ingresa tu direccion de correo."
-			validatorMessage="Formato de correo no valido"
-			value="#{login.user.email}">
-	
-		<f:validateRegex
-			pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-	
-		</p:inputText>
-	        
-	        <h:outputText value="Contrasenia: " />
-	        <p:password id="inlineFeedback" value="#{login.user.password}" feedback="true" inline="true" 
-	        	required="true"
-	        	requiredMessage="Ingrese su clave"/>
-    </h:panelGrid>
-     
-    <p:spacer height="10" />
-     
-    <p:separator />
-     
-	 <p:commandButton value="Ingresar" style="margin:20px"
-			action="#{login.iniciarSesion()}"  icon="ui-icon-key"/>  
- 
+</h:head>
+<body style="background-color: #7C8585;">
 
- </h:form>
-  <p:commandButton value="Regresar" onclick="window.history.back();" type="button" ajax="false" />
- 	</body>
+	<h:form id="form">
+		<p:growl id="messages" />
 
-	
+		<p:menubar>
+			<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
+			<p:menuitem value="Informacion" url="informacion.jsf"
+				icon="pi pi-times" />
+			<p:menuitem value="Consulta" url="consulta_general.jsf" />
+
+
+			<f:facet name="options">
+				<h:button value="LogIn" outcome="login" />
+				<!-- 				<p:commandButton value="Logout" action="login.jsf" icon="pi pi-home" /> -->
+			</f:facet>
+		</p:menubar>
+
+
+	</h:form>
+	<h:form>
+		<p:tooltip />
+		<p:messages id="msgs" closable="true" showDetail="true">
+			<p:autoUpdate />
+		</p:messages>
+		<h:panelGrid columns="2" cellpadding="5" id="grid">
+			<h:outputText value="Usuario o correo " />
+			<p:inputText id="email" required="true" label="email" size="40"
+				requiredMessage="Porfavor ingresa tu direccion de correo."
+				validatorMessage="Formato de correo no valido"
+				value="#{login.user.email}">
+
+				<f:validateRegex
+					pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+			</p:inputText>
+
+			<h:outputText value="Contrasenia: " />
+			<p:password id="inlineFeedback" value="#{login.user.password}"
+				feedback="true" inline="true" required="true"
+				requiredMessage="Ingrese su clave" />
+		</h:panelGrid>
+
+		<p:spacer height="10" />
+
+		<p:separator />
+
+		<p:commandButton value="Ingresar" style="margin:20px"
+			action="#{login.iniciarSesion()}" icon="ui-icon-key" />
+
+
+	</h:form>
+	<p:commandButton value="Regresar" onclick="window.history.back();"
+		type="button" ajax="false" />
+</body>
+
+
 
 </html>

@@ -60,6 +60,7 @@ public class ControlSession implements Serializable{
 	 */
 	public static void cerrarSession() {
 		FacesContext.getCurrentInstance().getExternalContext().invalidateSession();
+		
 	}
 
 }

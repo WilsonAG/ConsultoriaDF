@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Consultaria</title>
+	<style>
+<!--
+fondo
+
+ 
+
+de
+
+ 
+
+pantalla
+
+ 
+
+
+-->
+</style>
+</h:head>
+<body style="background-color: #7C8585;">
+
+	<h:form id="form">
+		<p:growl id="messages" />
+
+		<p:menubar>
+			<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
+			<p:menuitem value="Informacion" url="informacion.jsf"
+				icon="pi pi-times" />
+			<p:menuitem value="Consulta" url="consulta_general.jsf" />
+
+
+			<f:facet name="options">
+				<h:button value="LogIn" outcome="login" />
+				<!-- 				<p:commandButton value="Logout" action="login.jsf" icon="pi pi-home" /> -->
+			</f:facet>
+		</p:menubar>
+
+
+	</h:form>
+	<br />
+	<p:panel header="Consultas Defunciones Fetales 2015 - 2016"
+		style="background-color:#7C8585;">
+		<p:row>
+
+			<br />
+			<h:form>
+				<p:growl id="growl" life="2000" />
+				
+				<h1>Consulta General</h1>
+
+				<p:separator />
+				<br />
+				<br />
+				<p:dataTable id="tabla" value="#{reporte.reportes}" var="data">
+					<p:column headerText="Provincia">
+						<h:outputText value="#{data.provincia}" />
+
+					</p:column>
+					<p:column headerText="Cantidad Fallecidos">
+						<h:outputText value="#{data.fallecidos}" />
+					</p:column>
+				</p:dataTable>
+			</h:form>
+
+		</p:row>
+	</p:panel>
+
+</body>
+</html>

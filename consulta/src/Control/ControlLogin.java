@@ -7,6 +7,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Named;
+import javax.servlet.http.HttpSession;
 
 import Model.Usuario;
 
@@ -28,13 +29,13 @@ public class ControlLogin implements Serializable{
 			
 			Usuario userBD = user.buscarUsuario(user);			
 			if (userBD != null) {
-				url = "menu_administrador.xhtml?faces-redirect=true";		
+				url = "/admin/menu_administrador.xhtml?faces-redirect=true";		
 				ControlSession.getSession(true);
 				ControlSession.add("nameUser", userBD.getNombre());
 				String n = (String) ControlSession.get("nameUser");
 				String msj = "Bienvenido "+n;
 				FacesContext.getCurrentInstance().addMessage(null, 
-						new FacesMessage(FacesMessage.SEVERITY_INFO, msj, "no se muestra"));
+						new FacesMessage(FacesMessage.SEVERITY_INFO, msj, ""));
 			}else {
 				FacesContext.getCurrentInstance().addMessage(null, 
 						new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Credenciales incorrectas"));
@@ -46,6 +47,15 @@ public class ControlLogin implements Serializable{
 		}
 		
 		return url;
+	}
+	
+	public String cerrarSesion() {
+		HttpSession sesion = ControlSession.getSession(false);
+		if (sesion != null) {
+			sesion.invalidate();
+		}
+		
+		return "/index.xhtml?faces-redirect=true";
 	}
 	
 	public Usuario getUser() {

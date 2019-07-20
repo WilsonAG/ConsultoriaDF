@@ -28,12 +28,10 @@
                 <p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
             </p:submenu>
  
-        <p:menuitem value="Quit" url="informacion.jsf" icon="pi pi-times" />
- 
-        <f:facet name="options">
-           <h:button value="LogIn" outcome="login.jsf"  icon="pi pi-home" />
-           <h:button value="Registrarse" outcome="ingreso_usuario.jsf"  icon="pi pi-home" />
-        </f:facet>
+
+			<f:facet name="options">
+				<p:button value="Logout" outcome="#{login.cerrarSesion()}" />
+			</f:facet>
     </p:menubar>
     <h:form>
     <h2 style="margin-top:0">Consulta Respecto a la madre </h2>
