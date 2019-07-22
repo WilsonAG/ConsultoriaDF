@@ -11,6 +11,7 @@ import javax.inject.Named;
 
 import Conexion.Conexion;
 import Model.Canton;
+import Model.CausaFetal;
 import Model.EstadoCivil;
 import Model.Parroquia;
 import Model.Provincia;
@@ -31,6 +32,8 @@ public class controlDatos implements Serializable {
 	private ArrayList<Parroquia> parroquias;
 	private int est_civil;
 	private ArrayList<EstadoCivil> estados_civiles;
+	private int cau_fetal;
+	private ArrayList<CausaFetal> causas_fetales;
 	
 	
 	@PostConstruct
@@ -128,6 +131,25 @@ public class controlDatos implements Serializable {
 		}
 	}
 	
+	private void cargarCausas() {
+		String sql = "SELECT * from causa_fetal"; 
+		ResultSet rs = null;
+		try {
+			Conexion con = new Conexion();
+			rs = con.ejecutarQuery(sql);
+			
+			while (rs.next()) {
+				CausaFetal cf = new CausaFetal(rs.getInt(1), rs.getString(2));
+				this.causas_fetales.add(cf);
+
+			}
+			
+			con.cerrarConexion();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+	}
 	public void print() {
 		System.out.println(this.provincia+" "+this.canton);
 	}
@@ -196,6 +218,22 @@ public class controlDatos implements Serializable {
 
 	public void setEstados_civiles(ArrayList<EstadoCivil> estados_civiles) {
 		this.estados_civiles = estados_civiles;
+	}
+
+	public int getCau_fetal() {
+		return cau_fetal;
+	}
+
+	public void setCau_fetal(int cau_fetal) {
+		this.cau_fetal = cau_fetal;
+	}
+
+	public ArrayList<CausaFetal> getCausas_fetales() {
+		return causas_fetales;
+	}
+
+	public void setCausas_fetales(ArrayList<CausaFetal> causas_fetales) {
+		this.causas_fetales = causas_fetales;
 	}
 
 	@Override
