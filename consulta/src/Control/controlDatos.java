@@ -32,7 +32,7 @@ public class controlDatos implements Serializable {
 	private ArrayList<Parroquia> parroquias;
 	private int est_civil;
 	private ArrayList<EstadoCivil> estados_civiles;
-	private int cau_fetal;
+	private String cau_fetal;
 	private ArrayList<CausaFetal> causas_fetales;
 	
 	
@@ -40,6 +40,8 @@ public class controlDatos implements Serializable {
 	public void init() {
 		this.provincias = new ArrayList<Provincia>();
 		this.estados_civiles = new ArrayList<EstadoCivil>();
+		this.causas_fetales = new ArrayList<CausaFetal>();
+		cargarCausas();
 		cargarProvincias();
 		cargarEstados();
 	}
@@ -132,14 +134,14 @@ public class controlDatos implements Serializable {
 	}
 	
 	private void cargarCausas() {
-		String sql = "SELECT * from causa_fetal"; 
+		String sql = "SELECT * from CAUSA_FETAL"; 
 		ResultSet rs = null;
 		try {
 			Conexion con = new Conexion();
 			rs = con.ejecutarQuery(sql);
 			
 			while (rs.next()) {
-				CausaFetal cf = new CausaFetal(rs.getInt(1), rs.getString(2));
+				CausaFetal cf = new CausaFetal(rs.getString(1), rs.getString(2));
 				this.causas_fetales.add(cf);
 
 			}
@@ -220,11 +222,13 @@ public class controlDatos implements Serializable {
 		this.estados_civiles = estados_civiles;
 	}
 
-	public int getCau_fetal() {
+	
+
+	public String getCau_fetal() {
 		return cau_fetal;
 	}
 
-	public void setCau_fetal(int cau_fetal) {
+	public void setCau_fetal(String cau_fetal) {
 		this.cau_fetal = cau_fetal;
 	}
 

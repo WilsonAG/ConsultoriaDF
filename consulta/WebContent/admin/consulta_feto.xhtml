@@ -92,10 +92,11 @@
 				<p:outputLabel style="font-weight: bold">Eje de analisis</p:outputLabel>
 				<br></br>
 				<p:outputLabel value="Causa Fetal" />
-				<p:selectOneMenu id="c_fetal" value="#{data.cau_fetal}">
+				<p:selectOneMenu id="causa_fetal" value="#{data.cau_fetal}">
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
 					<f:selectItems value="#{data.causas_fetales}" var="causa"
 						itemLabel="#{causa.nombre}" itemValue="#{causa.id_causa_fetal}" />
+						
 				</p:selectOneMenu>
 			</p:column>
 
