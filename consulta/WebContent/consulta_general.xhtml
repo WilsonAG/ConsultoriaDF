@@ -10,15 +10,27 @@
 <!--
 fondo
 
+
+
  
+
+
 
 de
 
+
+
  
+
+
 
 pantalla
 
+
+
  
+
+
 
 
 -->
@@ -52,8 +64,18 @@ pantalla
 			<br />
 			<h:form>
 				<p:growl id="growl" life="2000" />
-				
+
 				<h1>Consulta General</h1>
+
+				<p:commandButton id="btnPastel" value="Grafico Pastel" type="button"
+					action="#{consulta.graficarPastel()}" />
+				<p:overlayPanel id="panelPastel" for="btnPastel" hideEffect="fade"
+					dynamic="true" style="width:600px" modal="true">
+					<p:pieChart model="#{consulta.pastel}"
+						style="width: 100%; height: 800px;" />
+				</p:overlayPanel>
+				
+				<!--  Poner Grafico Barras -->
 
 				<p:separator />
 				<br />
