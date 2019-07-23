@@ -8,11 +8,12 @@ import java.sql.Statement;
 
 public class Conexion {
 	
-	private final String SERVER= "localhost";
+	
+	private final String SERVER= "172.17.42.63";
 	private final String PORT= "1521";
-	private final String SID= "xe";
-	private final String USER = "df";
-	private final String PASSWORD = "admin";
+	private final String SID= "orclupsoltp";
+	private final String USER = "p54g2_oltp_df";
+	private final String PASSWORD = "g02_4263";
 	
 	private Connection conexion;
 	private Statement statement;

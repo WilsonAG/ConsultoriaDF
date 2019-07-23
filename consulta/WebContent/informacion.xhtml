@@ -9,11 +9,17 @@
 	<style>
 <!--
 fondo
+
  
+
 de
+
  
+
 pantalla
+
  
+
 
 -->
 </style>
@@ -25,13 +31,13 @@ pantalla
 		<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
 		<p:menuitem value="Informacion" url="informacion.jsf"
 			icon="pi pi-times" />
-			<p:menuitem value="Consulta" url="consulta_general.jsf"/>
+		<p:menuitem value="Consulta" url="consulta_general.jsf" />
 
 
-			<f:facet name="options">
-				<h:button value="LogIn" outcome="login" />
-<!-- 				<p:commandButton value="Logout" action="login.jsf" icon="pi pi-home" /> -->
-			</f:facet>
+		<f:facet name="options">
+			<h:button value="LogIn" outcome="login" />
+			<!-- 				<p:commandButton value="Logout" action="login.jsf" icon="pi pi-home" /> -->
+		</f:facet>
 	</p:menubar>
 
 	<div id="header">
@@ -47,8 +53,54 @@ pantalla
 				consultas para analisis en base a datos publicos proporcionados
 				intervienen a mas de otros factores como los siguientes:</p>
 		</div>
+		
+		<div id="sidebar">
+			<ul>
+				<li>
+					<h2>Objetivo Grupal:</h2>
+					<p>Poner a disposicion de las futuras generaciones la
+						disponibilidad deel sistema para una implementacion a futuro y
+						posibles cambios que sean necesarios</p>
+				</li>
+				<li>
+					<h2>Desarrolladores</h2>
+					<ul>
+						<li><a href="#">Aguilar Wilson</a></li>
+						<li><a href="#">Baez Henry</a></li>
+						<li><a href="#">Cacuango Gabriel</a></li>
+						<li><a href="#">Chango Carolina</a></li>
+						<li><a href="#">Laverde Pablo</a></li>
+					</ul>
+				</li>
+
+				<li>
+					<h2>Documentacion</h2>
+					<ul>
+						<li><a href="#">Informes</a></li>
+						<li><a href="#">Metodolgia utilizada</a></li>
+						<li><a href="#">Codigos Eclipse</a></li>
+						<li><a href="#">Codigos flask</a></li>
+						<li><a href="#">Codigo SQL Developer</a></li>
+					</ul>
+				</li>
+			</ul>
+		</div>
+		<!-- end #sidebar -->
 	</div>
 	<!-- end #cabecera -->
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
+	<br/>
 	<div id="page">
 		<div id="content">
 			<div class="post">
@@ -101,38 +153,7 @@ pantalla
 			<div style="clear: both;">&nbsp;</div>
 		</div>
 		<!-- end #contenido -->
-		<div id="sidebar">
-			<ul>
-				<li>
-					<h2>Objetivo Grupal:</h2>
-					<p>Poner a disposicion de las futuras generaciones la
-						disponibilidad deel sistema para una implementacion a futuro y
-						posibles cambios que sean necesarios</p>
-				</li>
-				<li>
-					<h2>Desarrolladores</h2>
-					<ul>
-						<li><a href="#">Aguilar Wilson</a></li>
-						<li><a href="#">Baez Henry</a></li>
-						<li><a href="#">Cacuango Gabriel</a></li>
-						<li><a href="#">Chango Carolina</a></li>
-						<li><a href="#">Laverde Pablo</a></li>
-					</ul>
-				</li>
-
-				<li>
-					<h2>Documentacion</h2>
-					<ul>
-						<li><a href="#">Informes</a></li>
-						<li><a href="#">Metodolgia utilizada</a></li>
-						<li><a href="#">Codigos Eclipse</a></li>
-						<li><a href="#">Codigos flask</a></li>
-						<li><a href="#">Codigo SQL Developer</a></li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-		<!-- end #sidebar -->
+		
 		<div style="clear: both;">&nbsp;</div>
 	</div>
 	<!-- end #pagina -->

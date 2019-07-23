@@ -16,9 +16,10 @@ pantalla
 
 -->
 </style>
+<link rel="stylesheet" href="resources/estilo.css" />
 </h:head>
 <body style="background-color: #7C8585;">
-
+<center>
 	<h:form id="form">
 		<p:growl id="messages" />
 
@@ -37,14 +38,16 @@ pantalla
 
 
 	</h:form>
+	<center>
 	<h:form>
-		<p:tooltip />
+		
+
 		<p:messages id="msgs" closable="true" showDetail="true">
 			<p:autoUpdate />
 		</p:messages>
-		<h:panelGrid columns="2" cellpadding="5" id="grid">
-			<h:outputText value="Usuario o correo " />
-			<p:inputText id="email" required="true" label="email" size="40"
+		<h:panelGrid  styleClass="panelGridCenter"  class="marge" cellpadding="5" >
+			<center><h:outputText value="Usuario o correo " /></center>
+			<p:inputText  required="true" label="email" size="40"
 				requiredMessage="Porfavor ingresa tu direccion de correo."
 				validatorMessage="Formato de correo no valido"
 				value="#{login.user.email}">
@@ -53,24 +56,30 @@ pantalla
 					pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
 
 			</p:inputText>
+			
 
-			<h:outputText value="Contrasenia: " />
-			<p:password id="inlineFeedback" value="#{login.user.password}"
+			<h:outputText    value="Contrasenia: " />
+			<center><p:password  value="#{login.user.password}"
 				 required="true"
-				requiredMessage="Ingrese su clave" />
+				requiredMessage="Ingrese su clave" /></center>
 		</h:panelGrid>
+		
+		
 
-		<p:spacer height="10" />
+	
 
 		<p:separator />
 
-		<p:commandButton value="Ingresar" style="margin:20px"
+		<p:commandButton value="Ingresar" 
 			action="#{login.iniciarSesion()}" icon="ui-icon-key" />
 
 
 	</h:form>
-	<p:commandButton value="Regresar" onclick="window.history.back();"
+	</center>
+	<center><p:commandButton value="Regresar" onclick="window.history.back();"
 		type="button" ajax="false" />
+		</center>
+		</center>
 </body>
 
 
