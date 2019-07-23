@@ -6,22 +6,25 @@
 
 <h:head>
 	<title>Consultores asociados</title>
-	<style>
-<!--
-fondo
+	<style type="text/css">
+.ui-datalist .ui-datalist-content {
+	border: 0 none
+}
 
- 
+.ui-datalist ul {
+	padding: 0px 10px 0 20px;
+	margin: 5px 0;
+}
 
-de
+.value {
+	font-weight: bold;
+}
 
- 
-
-pantalla
-
- 
-
-
--->
+.ui-autocomplete-itemtip {
+	-moz-box-sizing: content-box;
+	-webkit-box-sizing: content-box;
+	box-sizing: content-box;
+}
 </style>
 </h:head>
 <body style="background-color: #7C8585;">
@@ -49,53 +52,25 @@ pantalla
 		</h1>
 
 
-
-		<style type="text/css">
-.ui-datalist .ui-datalist-content {
-	border: 0 none
-}
-
-.ui-datalist ul {
-	padding: 0px 10px 0 20px;
-	margin: 5px 0;
-}
-
-.value {
-	font-weight: bold;
-}
-
-.ui-autocomplete-itemtip {
-	-moz-box-sizing: content-box;
-	-webkit-box-sizing: content-box;
-	box-sizing: content-box;
-}
-</style>
-
-
-		<h:form id="form">
+		<h:form>
+			<p:growl id="msgs" showDetail="true" sticky="true" life="2000" />
 			<p:panel id="panel" header="Registro" style="margin-bottom:10px;">
-				<p:messages id="messages" />
 				<h:panelGrid columns="3" cellpadding="5">
 
 					<p:outputLabel for="nombre" value="Nombre:" />
-					<p:inputText id="nombre" value="#{resetInputView.text1}"
+					<p:inputText id="nombre" value="#{registro.usuario.user}"
 						required="true" label="nombre">
 						<f:validateLength minimum="2" />
 					</p:inputText>
 					<p:message for="nombre" />
 
-					<p:outputLabel for="apellido" value="Apellido:" />
-					<p:inputText id="apellido" value="#{resetInputView.text2}"
-						required="true" label="apellido" />
-					<p:message for="apellido" />
-
 					<p:outputLabel for="correo" value="Correo" />
-					<p:inputText id="correo" value="#{resetInputView.text2}"
+					<p:inputText id="correo" value="#{registro.usuario.mail}"
 						required="true" label="Surname" />
 					<p:message for="correo" />
 
 					<h:outputText value="Clave : " />
-					<p:password id="clave" value="#{passwordView.password3}"
+					<p:password id="clave" value="#{registro.usuario.pass}"
 						feedback="true" promptLabel="ingrese clave" weakLabel="debil"
 						goodLabel="buena" strongLabel="Fuerte" />
 
@@ -107,8 +82,8 @@ pantalla
 
 			<p:toolbar>
 				<f:facet name="left">
-					<p:commandButton value="Enviar" update="panel"
-						action="#{resetInputView.save}" style="margin-right:20px;" />
+					<p:commandButton value="Enviar" update="@form"
+						action="#{registro.crearUser()}" style="margin-right:20px;" />
 				</f:facet>
 
 
