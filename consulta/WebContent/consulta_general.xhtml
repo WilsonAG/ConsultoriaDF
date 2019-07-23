@@ -58,13 +58,12 @@ pantalla
 				<p:separator />
 				<br />
 				<br />
-				<p:dataTable id="tabla" value="#{reporte.reportes}" var="data">
+				<p:dataTable id="tabla" value="#{consulta.provincias}" var="provs">
 					<p:column headerText="Provincia">
-						<h:outputText value="#{data.provincia}" />
-
+						<h:outputText value="#{provs.nombre}" />
 					</p:column>
 					<p:column headerText="Cantidad Fallecidos">
-						<h:outputText value="#{data.fallecidos}" />
+						<h:outputText value="#{provs.muertes}" />
 					</p:column>
 				</p:dataTable>
 			</h:form>
