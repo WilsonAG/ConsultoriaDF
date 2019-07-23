@@ -36,8 +36,10 @@
 			<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
 			<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
 		</p:submenu>
-		<p:menuitem value="Administrador" url="ingreso_usuario.jsf"
-			icon="pi pi-times" />
+		
+		<p:submenu label="Administrador">
+			<p:menuitem value="Crear usuarios" url="ingreso_usuario.jsf" />
+		</p:submenu>
 
 
 
@@ -60,7 +62,7 @@
 					<p:outputLabel for="nombre" value="Nombre:" />
 					<p:inputText id="nombre" value="#{registro.usuario.user}"
 						required="true" label="nombre">
-						<f:validateLength minimum="2" />
+						<f:validateLength minimum="5" />
 					</p:inputText>
 					<p:message for="nombre" />
 
