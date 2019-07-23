@@ -1,0 +1,51 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:body>
+	
+
+	<h:form>
+
+		<!-- 		<p:growl id="msgs" showDetail="true" /> -->
+		<p:panel header="TOP DEFUNCIONES FETALES SEGUN CAUSA FETAL">
+			<h:selectOneRadio value="#{vm1.top}">
+				<f:selectItem itemValue="3" itemLabel="3" />
+				<f:selectItem itemValue="10" itemLabel="10" />
+				<f:selectItem itemValue="20" itemLabel="20" />
+			</h:selectOneRadio>
+
+
+			<h:commandButton actionListener="#{vm1.generar()}"
+				value="Registrar" />
+			<br />
+			<br></br>
+			<p:dataTable value="#{vm1.vm}" var="us">
+
+				<p:column headerText="AÃ‘O ">
+					<center>#{us.tiempo}</center>
+				</p:column>
+				<p:column headerText="PROVINCIA ">
+					<center>#{us.ubicacion}</center>
+				</p:column>
+				<p:column headerText="CAUSA FETAL">
+					<center>#{us.causa}</center>
+				</p:column>
+				<p:column headerText="TOTAL">
+					<center>#{us.total}</center>
+				</p:column>
+
+			</p:dataTable>
+
+
+
+		</p:panel>
+	</h:form>
+</h:body>
+
+</html>

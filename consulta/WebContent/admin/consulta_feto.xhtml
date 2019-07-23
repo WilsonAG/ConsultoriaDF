@@ -1,10 +1,11 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:f="http://java.sun.com/jsf/core"
-	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui" 
+      >
 
-<h:head>
+	 <h:head>
 	<title>Consulta Feto</title>
 	<style type="text/css">
 .value {
@@ -27,9 +28,6 @@
 			<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
 			<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
 		</p:submenu>
-		<p:submenu label="Administrador">
-			<p:menuitem value="Crear usuarios" url="ingreso_usuario.jsf" />
-		</p:submenu>
 
 		<f:facet name="options">
 			<p:button value="Logout" outcome="#{login.cerrarSesion()}" />
@@ -46,8 +44,8 @@
 			<p:column>
 				<p:outputLabel style="font-weight: bold;">Periodo de analisis tiempo</p:outputLabel>
 				<br></br>
-				<p:outputLabel for="console" value="años:" />
-				<p:selectOneRadio id="console" value="#{radioView.console}"
+				<p:outputLabel for="console" value="aÃ±os:" />
+				<p:selectOneRadio id="console" value="#{data.anio}"
 					unselectable="true">
 					<f:selectItem itemLabel="2015" itemValue="2015" />
 					<f:selectItem itemLabel="2016" itemValue="2016" />
@@ -55,7 +53,7 @@
 
 				<p:outputLabel value="Trimestre: " />
 				<br></br>
-				<p:selectOneMenu>
+				<p:selectOneMenu value="#{data.trimestre}">
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
 					<f:selectItem itemLabel="1" itemValue="1" />
 					<f:selectItem itemLabel="2" itemValue="2" />
@@ -71,8 +69,8 @@
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
 					<f:selectItems value="#{data.provincias}" var="provs"
 						itemLabel="#{provs.nombre}" itemValue="#{provs.id_provincia}" />
-					<p:ajax event="change" listener="#{data.obtenerCantones()}"
-						update="cant" />
+					<p:ajax event="change" listener="#{data.obtenerCantones}"
+						update="cant"/>
 				</p:selectOneMenu>
 				<p:outputLabel value="Canton" />
 				<p:selectOneMenu id="cant" value="#{data.canton}">
@@ -98,7 +96,7 @@
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
 					<f:selectItems value="#{data.causas_fetales}" var="causa"
 						itemLabel="#{causa.nombre}" itemValue="#{causa.id_causa_fetal}" />
-
+						
 				</p:selectOneMenu>
 			</p:column>
 
@@ -133,23 +131,24 @@
 		</table>
 
 
-
+<h:commandButton  action="#{data.consultar_datos_feto()}" value="Consultar" />
 		<h3>Muestra de los datos:</h3>
-		<p:dataTable var="car" value="#{dtBasicView.cars}">
+		<p:dataTable var="car" value="#">
 			<p:column headerText="trimestre">
-				<h:outputText value="#{car.id}" />
+		
+				<h:outputText value="#{data.trimestre}" />
 			</p:column>
 
-			<p:column headerText="anio">
-				<h:outputText value="#{car.year}" />
+			<p:column headerText="ANIO">
+				<h:outputText value="#{data.anio}" />
 			</p:column>
 
 			<p:column headerText="causa fetal">
-				<h:outputText value="#{car.brand}" />
+				<h:outputText value="#{data.cau_fetal}" />
 			</p:column>
 
 			<p:column headerText="Numero total ">
-				<h:outputText value="#{car.color}" />
+				<h:outputText value="#" />
 			</p:column>
 		</p:dataTable>
 
