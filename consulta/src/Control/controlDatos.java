@@ -24,16 +24,18 @@ public class controlDatos implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	private int provincia;
+	private static int provincia;
 	private ArrayList<Provincia>provincias;
-	private int canton;
+	private static int canton;
 	private ArrayList<Canton>cantones;
-	private int parroquia;
+	private static int parroquia;
 	private ArrayList<Parroquia> parroquias;
-	private int est_civil;
+	private static int est_civil;
 	private ArrayList<EstadoCivil> estados_civiles;
-	private String cau_fetal;
+	private static String cau_fetal;
 	private ArrayList<CausaFetal> causas_fetales;
+	private static int anio;
+	private static int trimestre;
 	
 	
 	@PostConstruct
@@ -41,6 +43,8 @@ public class controlDatos implements Serializable {
 		this.provincias = new ArrayList<Provincia>();
 		this.estados_civiles = new ArrayList<EstadoCivil>();
 		this.causas_fetales = new ArrayList<CausaFetal>();
+		this.cantones = new ArrayList<Canton>();
+		this.parroquias = new ArrayList<Parroquia>();
 		cargarCausas();
 		cargarProvincias();
 		cargarEstados();
@@ -238,6 +242,22 @@ public class controlDatos implements Serializable {
 
 	public void setCausas_fetales(ArrayList<CausaFetal> causas_fetales) {
 		this.causas_fetales = causas_fetales;
+	}
+
+	public static int getAnio() {
+		return anio;
+	}
+
+	public static void setAnio(int anio) {
+		controlDatos.anio = anio;
+	}
+
+	public static int getTrimestre() {
+		return trimestre;
+	}
+
+	public static void setTrimestre(int trimestre) {
+		controlDatos.trimestre = trimestre;
 	}
 
 	@Override
