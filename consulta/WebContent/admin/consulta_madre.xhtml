@@ -26,6 +26,8 @@
 			<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
 			<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
 		</p:submenu>
+		<p:menuitem value="Administrador" url="menu_administrador.jsf"
+			icon="pi pi-times" />
 
 
 		<f:facet name="options">
@@ -76,7 +78,8 @@
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
 					<f:selectItems value="#{data.cantones}" var="cants"
 						itemLabel="#{cants.nombre}" itemValue="#{cants.id_canton}" />
-					<p:ajax event="change" listener="#{data.obtenerParroquias()}" update="parr"/>
+					<p:ajax event="change" listener="#{data.obtenerParroquias()}"
+						update="parr" />
 				</p:selectOneMenu>
 
 				<p:outputLabel value="Parroquia" />
@@ -93,7 +96,8 @@
 				<p:outputLabel value="Estado civil" />
 				<p:selectOneMenu id="estCiv" value="#{data.est_civil}">
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
-					<f:selectItems value="#{data.estados_civiles}" var="civil" itemLabel="#{civil.nombre}" itemValue="#{civil.id_estCivil}"/>
+					<f:selectItems value="#{data.estados_civiles}" var="civil"
+						itemLabel="#{civil.nombre}" itemValue="#{civil.id_estCivil}" />
 				</p:selectOneMenu>
 			</p:column>
 
