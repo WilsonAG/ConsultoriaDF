@@ -9,5 +9,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="F:/D_Fetales_G1/WebContent/WEB-INF/lib/primefaces-6.2.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

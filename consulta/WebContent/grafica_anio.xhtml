@@ -1,0 +1,76 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+
+
+<h:head>
+
+
+
+	<p:growl id="messages" />
+
+	<p:menubar>
+		<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
+		<p:menuitem value="Informacion" url="informacion.jsf"
+			icon="pi pi-times" />
+		<p:submenu label="Consultas">
+			<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
+			<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+			<p:menuitem value="Top Defunciones por estado civil"
+				url="top_civil.jsf" />
+
+		</p:submenu>
+
+		<f:facet name="options">
+			<p:button value="Logout" outcome="#{login.cerrarSesion()}" />
+		</f:facet>
+	</p:menubar>
+
+</h:head>
+
+
+<h:body style="background-color: #7C8585;">
+<br/>
+<h:form>
+
+<center>
+<p:chart type="pie" model="#{graficas_1.pieModel2}" style="width:750px;height:750px"></p:chart>
+</center>
+<center>
+<table border="1">
+
+<tr>
+<td>
+
+<center>2015</center>
+
+</td>
+<td>
+<center>2016</center>
+</td>
+
+</tr>
+<tr>
+<td>
+
+<center>1876</center>
+
+</td>
+<td>
+<center>1748</center>
+
+</td>
+</tr>
+
+</table>
+
+</center>
+</h:form>
+
+</h:body>
+
+</html>

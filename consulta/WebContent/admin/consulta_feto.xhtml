@@ -16,25 +16,6 @@
 </h:head>
 <body style="background-color: #7C8585;">
 
-
-	<p:growl id="messages" />
-
-	<p:menubar>
-		<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
-		<p:menuitem value="Informacion" url="informacion.jsf"
-			icon="pi pi-times" />
-		<p:submenu label="Consultas">
-			<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
-			<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
-			<p:menuitem value="Top Defunciones por estado civil"
-				url="top_civil.jsf" />
-
-		</p:submenu>
-
-		<f:facet name="options">
-			<p:button value="Logout" outcome="#{login.cerrarSesion()}" />
-		</f:facet>
-	</p:menubar>
 	<h:form>
 		<h2 style="margin-top: 0">Consulta respecto al feto</h2>
 		<h3 style="margin-top: 0">
@@ -120,9 +101,7 @@
 			</p:column>
 		</p:dataTable>
 
-		<h3>Graficas de los datos:</h3>
-
-		<h2>Vistas Materializadas</h2>
+	
 
 	</h:form>
 
