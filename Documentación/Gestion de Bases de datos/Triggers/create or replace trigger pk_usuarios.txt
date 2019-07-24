@@ -1,0 +1,9 @@
+create or replace trigger pk_usuarios
+BEFORE INSERT 
+ON USUARIOS
+referencing new as new FOR EACH ROW
+    BEGIN
+IF :NEW.ID_USUARIO IS NULL THEN
+    SELECT S_USUARIOS_SEQ.nextval INTO :new.ID_USUARIO FROM dual;
+END IF;
+END;

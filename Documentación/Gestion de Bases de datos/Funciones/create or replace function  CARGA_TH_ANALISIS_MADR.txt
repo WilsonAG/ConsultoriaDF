@@ -1,0 +1,359 @@
+create or replace function  CARGA_TH_ANALISIS_MADRE_G1 (vanio int,vtrimestre int)
+return number
+is 
+    cursor c_th_tiempo is 
+    select * from d_tiempo 
+        where anio = vanio
+        and trimestre= vtrimestre
+    order by id_tiempo;
+
+    cursor c_th_ubic is 
+    select id_ubicacion, id_provincia, id_canton, id_parroquia 
+    from d_ubicacion
+    where id_provincia <> 90
+    order by id_ubicacion;
+
+    cursor c_th_est_civ is 
+    select id_d_estado_civil, id_estado_civil,estado_civil 
+    from d_estado_civil 
+    where id_estado_civil in (select DISTINCT id_estado_civil from defunciones)
+    order by id_d_estado_civil ;
+
+
+    --------------- definición de registros
+    r_tiempo c_th_tiempo%rowtype;
+    r_ubic c_th_ubic%rowtype;
+    r_est_civ c_th_est_civ%rowtype; 
+
+    --------------------
+    v_id_dim_tiempo int := 0 ; 
+    v_num_iter int := 0 ;
+    v_carga int := 0 ;
+    r1 int ;
+    r2 int ;
+
+BEGIN 
+-- Verifica que no se tenga cargado el periodo solicitado a traves de los parámetros de entrada año y trimerstre de la función
+--datos falla 
+select id_tiempo into v_id_dim_tiempo
+ from d_tiempo 
+ where anio = vanio and trimestre = vtrimestre and mes is null;
+select count(*) into v_carga
+ from th_analisis_madre 
+ where id_tiempo = v_id_dim_tiempo;
+----- determinar rango de mes de inicio y fin del trimestre ingresado
+if vtrimestre =1 then 
+        r1:=1;
+        r2:=3;
+    elsif vtrimestre=2 then
+        r1:=4;
+        r2:=6;
+    elsif vtrimestre=3 then
+        r1:=7;
+        r2:=9;
+    elsif vtrimestre=4 then
+        r1:=10;
+        r2:=12;
+end if ;
+if v_carga > 0 then
+   RETURN v_num_iter;
+end if;
+-------- Análisis en base a la dimensión tiempo
+OPEN c_th_tiempo;
+fetch c_th_tiempo into r_tiempo; -- campos de la dimension tiempo
+
+while c_th_tiempo%found loop
+
+    if vtrimestre = 4 then
+       insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                   select r_tiempo.id_tiempo,null,null,sem_gest,con_pren,count(*)
+                     from defunciones 
+                    where to_number(anio_fall) = r_tiempo.anio
+                 group by sem_gest,con_pren
+                 having count(*) > 0;
+                 COMMIT;
+    elsif r_tiempo.trimestre is not null and r_tiempo.mes is null then
+       insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                   select r_tiempo.id_tiempo,null,null,sem_gest,con_pren,count(*)
+                     from defunciones 
+                    where to_number(anio_fall) = r_tiempo.anio
+                    and mes_fall between r1 and r2
+                 group by sem_gest,con_pren
+                 having count(*) > 0;
+                COMMIT;
+    elsif r_tiempo.trimestre is not null and r_tiempo.mes is not null then  
+          insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                   select r_tiempo.id_tiempo,null,null,sem_gest,con_pren,count(*)
+                     from defunciones 
+                    where to_number(anio_fall) = r_tiempo.anio
+                    and mes_fall = r_tiempo.mes
+                 group by sem_gest,con_pren
+                 having count(*) > 0;         
+                 COMMIT;
+    end if;
+
+    -------- Análisis en base a la dimensión tiempo + ubicación geográfica
+    OPEN c_th_ubic;
+
+    fetch c_th_ubic into r_ubic; -- campos de la dimension tiempo
+
+    while c_th_ubic%found loop
+
+        if vtrimestre = 4 then
+           if r_ubic.id_parroquia is null and r_ubic.id_canton is null then
+              insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                         select r_tiempo.id_tiempo,r_ubic.id_ubicacion,null,sem_gest,con_pren,count(*)
+                           from defunciones 
+                          where to_number(anio_fall) = r_tiempo.anio
+                            and prov_fall = r_ubic.id_provincia
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+                       COMMIT;
+           elsif r_ubic.id_parroquia is null and r_ubic.id_canton is not null then
+              insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                         select r_tiempo.id_tiempo,r_ubic.id_ubicacion,null,sem_gest,con_pren,count(*)
+                           from defunciones 
+                          where to_number(anio_fall) = r_tiempo.anio
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+                       COMMIT;
+           elsif r_ubic.id_parroquia is not null and r_ubic.id_canton is not null then
+              insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                         select r_tiempo.id_tiempo,r_ubic.id_ubicacion,null,sem_gest,con_pren,count(*)
+                           from defunciones 
+                          where to_number(anio_fall) = r_tiempo.anio
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                            and parro_fall = r_ubic.id_provincia||r_ubic.id_canton||r_ubic.id_parroquia
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+                       COMMIT;
+           end if;            
+
+       elsif r_tiempo.trimestre is not null and r_tiempo.mes is null then
+           if r_ubic.id_parroquia is null and r_ubic.id_canton is null then
+              insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                       select r_tiempo.id_tiempo,r_ubic.id_ubicacion,null,sem_gest,con_pren,count(*)
+                         from defunciones 
+                        where to_number(anio_fall) = r_tiempo.anio
+                          and mes_fall between r1 and r2
+                          and prov_fall = r_ubic.id_provincia
+                         group by sem_gest,con_pren
+                         having count(*) > 0;
+                        COMMIT;
+           elsif r_ubic.id_parroquia is null and r_ubic.id_canton is not null then
+              insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                         select r_tiempo.id_tiempo,r_ubic.id_ubicacion,null,sem_gest,con_pren,count(*)
+                           from defunciones 
+                          where to_number(anio_fall) = r_tiempo.anio
+                            and mes_fall between r1 and r2
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+                       COMMIT;
+           elsif r_ubic.id_parroquia is not null and r_ubic.id_canton is not null then
+              insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                         select r_tiempo.id_tiempo,r_ubic.id_ubicacion,null,sem_gest,con_pren,count(*)
+                           from defunciones 
+                          where to_number(anio_fall) = r_tiempo.anio
+                            and mes_fall between r1 and r2
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                            and parro_fall = r_ubic.id_provincia||r_ubic.id_canton||r_ubic.id_parroquia
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+                       COMMIT;
+           end if;            
+
+        elsif r_tiempo.trimestre is not null and r_tiempo.mes is not null then  
+           -- analiza por año - mes - provincia     
+           if r_ubic.id_parroquia is null and r_ubic.id_canton is null then
+                  insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                           select r_tiempo.id_tiempo,r_ubic.id_ubicacion,null,sem_gest,con_pren,count(*)
+                             from defunciones 
+                            where to_number(anio_fall) = r_tiempo.anio
+                              and mes_fall = r_tiempo.mes
+                              and prov_fall = r_ubic.id_provincia
+                             group by sem_gest,con_pren
+                             having count(*) > 0;
+                             COMMIT;
+
+           elsif r_ubic.id_parroquia is null and r_ubic.id_canton is not null then
+              -- analiza por año - mes - provincia - canton
+              insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                         select r_tiempo.id_tiempo,r_ubic.id_ubicacion,null,sem_gest,con_pren,count(*)
+                           from defunciones 
+                          where to_number(anio_fall) = r_tiempo.anio
+                            and mes_fall = r_tiempo.mes
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+                       COMMIT;
+           elsif r_ubic.id_parroquia is not null and r_ubic.id_canton is not null then
+              -- analiza por año - mes - provincia - canton - parroquia
+              insert into th_analisis_madre (id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes) 
+                         select r_tiempo.id_tiempo,r_ubic.id_ubicacion,null,sem_gest,con_pren,count(*)
+                           from defunciones 
+                          where to_number(anio_fall) = r_tiempo.anio
+                            and mes_fall = r_tiempo.mes
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                            and parro_fall = r_ubic.id_provincia||r_ubic.id_canton||r_ubic.id_parroquia
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+                       COMMIT;
+           end if;  
+
+        end if;
+
+       
+
+        -------- Análisis en base a la dimensión tiempo + ubicación geográfica + dimension ESTADO CIVIL --------------------
+         OPEN c_th_est_civ;
+        fetch c_th_est_civ into r_est_civ; -- campos de la dimension est_civil
+        while c_th_est_civ%found loop
+
+    if vtrimestre = 4 then
+           if r_ubic.id_parroquia is null and r_ubic.id_canton is null then
+              insert into th_analisis_madre(id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes)
+                        select r_tiempo.id_tiempo,r_ubic.id_ubicacion,r_est_civ.id_estado_civil,sem_gest,con_pren,count(*)
+                            from defunciones 
+                          where anio_fall = r_tiempo.anio
+                            and prov_fall = r_ubic.id_provincia
+                            and defunciones.id_estado_civil = r_est_civ.id_estado_civil
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+               commit;
+
+           elsif r_ubic.id_parroquia is null and r_ubic.id_canton is not null then
+               insert into th_analisis_madre(id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes)
+                        select r_tiempo.id_tiempo,r_ubic.id_ubicacion,r_est_civ.id_estado_civil,sem_gest,con_pren,count(*)
+                            from defunciones 
+                          where anio_fall = r_tiempo.anio
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                            and defunciones.id_estado_civil = r_est_civ.id_estado_civil
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+               commit;
+
+           elsif r_ubic.id_parroquia is not null and r_ubic.id_canton is not null then
+               insert into th_analisis_madre(id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes)
+                        select r_tiempo.id_tiempo,r_ubic.id_ubicacion,r_est_civ.id_estado_civil,sem_gest,con_pren,count(*)
+                            from defunciones
+                          where anio_fall = r_tiempo.anio
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                            and parro_fall = r_ubic.id_provincia||r_ubic.id_canton||r_ubic.id_parroquia
+                            and defunciones.id_estado_civil = r_est_civ.id_estado_civil
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+               commit;
+
+           end if;            
+
+       elsif r_tiempo.trimestre is not null and r_tiempo.mes is null then
+           if r_ubic.id_parroquia is null and r_ubic.id_canton is null then
+              insert into th_analisis_madre(id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes)
+                        select r_tiempo.id_tiempo,r_ubic.id_ubicacion,r_est_civ.id_estado_civil,sem_gest,con_pren,count(*)
+                            from defunciones 
+                        where anio_fall = r_tiempo.anio ---273
+                          and mes_fall between r1 and r2
+                          and prov_fall = r_ubic.id_provincia
+                          and defunciones.id_estado_civil = r_est_civ.id_estado_civil
+                       group by sem_gest,con_pren
+                         having count(*) > 0;
+              commit;
+
+           elsif r_ubic.id_parroquia is null and r_ubic.id_canton is not null then
+              insert into th_analisis_madre(id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes)
+                        select r_tiempo.id_tiempo,r_ubic.id_ubicacion,r_est_civ.id_estado_civil,sem_gest,con_pren,count(*)
+                            from defunciones 
+                          where anio_fall = r_tiempo.anio
+                            and mes_fall between r1 and r2
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                            and defunciones.id_estado_civil = r_est_civ.id_estado_civil
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+              commit;
+
+           elsif r_ubic.id_parroquia is not null and r_ubic.id_canton is not null then
+              insert into th_analisis_madre(id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes)
+                        select r_tiempo.id_tiempo,r_ubic.id_ubicacion,r_est_civ.id_estado_civil,sem_gest,con_pren,count(*)
+                            from defunciones 
+                          where anio_fall = r_tiempo.anio
+                            and mes_fall between r1 and r2
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                            and parro_fall = r_ubic.id_provincia||r_ubic.id_canton||r_ubic.id_parroquia
+                            and defunciones.id_estado_civil = r_est_civ.id_estado_civil
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+                commit;
+           end if;            
+
+        elsif r_tiempo.trimestre is not null and r_tiempo.mes is not null then  
+           -- analiza por año - mes - provincia -est_civil    
+           if r_ubic.id_parroquia is null and r_ubic.id_canton is null then
+                  insert into th_analisis_madre(id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes)
+                        select r_tiempo.id_tiempo,r_ubic.id_ubicacion,r_est_civ.id_estado_civil,sem_gest,con_pren,count(*)
+                            from defunciones 
+                            where anio_fall = r_tiempo.anio
+                              and mes_fall = r_tiempo.mes
+                              and prov_fall = r_ubic.id_provincia
+                              and defunciones.id_estado_civil = r_est_civ.id_estado_civil
+                       group by sem_gest,con_pren
+                             having count(*) > 0;
+                   commit;
+
+           elsif r_ubic.id_parroquia is null and r_ubic.id_canton is not null then
+              -- analiza por año - mes - provincia - canton -est_civil
+              insert into th_analisis_madre(id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes)
+                        select r_tiempo.id_tiempo,r_ubic.id_ubicacion,r_est_civ.id_estado_civil,sem_gest,con_pren,count(*)
+                            from defunciones 
+                          where anio_fall = r_tiempo.anio
+                            and mes_fall = r_tiempo.mes
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                            and defunciones.id_estado_civil = r_est_civ.id_estado_civil
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+                 commit;
+
+           elsif r_ubic.id_parroquia is not null and r_ubic.id_canton is not null then
+              -- analiza por año - mes - provincia - canton - parroquia -est_civil
+              insert into th_analisis_madre(id_tiempo,id_ubicacion,id_estado_civil, sem_gest,con_pren, n_muertes)
+                        select r_tiempo.id_tiempo,r_ubic.id_ubicacion,r_est_civ.id_estado_civil,sem_gest,con_pren,count(*)
+                            from defunciones 
+                          where anio_fall = r_tiempo.anio
+                            and mes_fall = r_tiempo.mes
+                            and prov_fall = r_ubic.id_provincia
+                            and cant_fall = r_ubic.id_provincia||r_ubic.id_canton
+                            and parro_fall = r_ubic.id_provincia||r_ubic.id_canton||r_ubic.id_parroquia
+                            and defunciones.id_estado_civil= r_est_civ.id_estado_civil
+                       group by sem_gest,con_pren
+                       having count(*) > 0;
+            commit;
+           end if;  
+
+        end if;
+        fetch c_th_est_civ into r_est_civ ;
+        end loop; --est_civil
+        close c_th_est_civ; --- se cierra el cursor de dimension est_civil
+
+        -------------------------------------------------------------------------------------------------------------------
+         fetch c_th_ubic into r_ubic; 
+        v_num_iter := v_num_iter +1;
+    end loop; -- Ubicacion geográfica
+    close  c_th_ubic;
+    fetch c_th_tiempo into r_tiempo ;
+end loop;  -- Tiempo
+close  c_th_tiempo;
+commit;
+RETURN v_num_iter;
+END;

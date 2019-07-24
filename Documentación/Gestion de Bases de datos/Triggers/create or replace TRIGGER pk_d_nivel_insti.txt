@@ -1,0 +1,10 @@
+create or replace TRIGGER pk_d_nivel_insti
+BEFORE INSERT 
+ON d_instruccion
+referencing new as new FOR EACH ROW 
+BEGIN 
+IF :NEW.ID_D_INSTRUCCION IS NULL THEN
+SELECT D_INSTRUCCION_ID_NIVEL_INTI432.nextval INTO:NEW.ID_D_INSTRUCCION from dual;
+END IF;
+
+END;

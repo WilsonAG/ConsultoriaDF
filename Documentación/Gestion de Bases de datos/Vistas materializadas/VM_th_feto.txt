@@ -1,0 +1,26 @@
+  CREATE MATERIALIZED VIEW "P54G2_OLTP_DF"."VM_TH_FETO" ("Año Trimestre Mes", "Cod: Prov Cant Parr", " Causa de muerte fetal", "Sexo", "Estado civil", "Producto embarazo", "N_MUERTES")
+  ORGANIZATION HEAP PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TSP_GBD_4263" 
+  BUILD IMMEDIATE
+  USING INDEX 
+  REFRESH FORCE ON DEMAND
+  USING DEFAULT LOCAL ROLLBACK SEGMENT
+  USING ENFORCED CONSTRAINTS DISABLE QUERY REWRITE
+  AS SELECT  d_t.anio||' '|| nvl(d_t.trimestre,'')||' '||nvl(d_t.mes,'') "Año Trimestre Mes",
+        d_u.provincia||' '||nvl(d_u.canton,'')||' '||nvl(d_u.parroquia,'') "Cod: Prov Cant Parr",
+        d_c_f.causa_fetal " Causa de muerte fetal",
+        decode(t_h.sexo,1,'H',2,'M',3,'N-R') "Sexo",
+        estado_civil "Estado civil",
+        decode(prod_emba,1,'Simple',2,'Doble',3,'Triple',4,'Cuadruple','mas de 4') "Producto embarazo",
+        n_muertes
+from th_analisis_feto t_h,d_tiempo d_t,d_ubicacion d_u,d_causa_fetal d_c_f, d_estado_civil ec
+where t_h.id_tiempo=d_t.id_tiempo
+AND t_h.id_ubicacion=d_u.id_ubicacion
+AND t_h.id_d_c_fetal=d_c_f.id_d_c_fetal
+AND t_h.id_estado_civil = ec.id_estado_civil;
+ 
+
+   COMMENT ON MATERIALIZED VIEW "P54G2_OLTP_DF"."VM_TH_FETO"  IS 'snapshot table for snapshot P54G2_OLTP_DF.VM_TH_FETO';
+ 

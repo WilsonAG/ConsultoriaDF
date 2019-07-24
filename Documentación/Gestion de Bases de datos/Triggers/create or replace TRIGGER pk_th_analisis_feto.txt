@@ -1,0 +1,9 @@
+create or replace TRIGGER pk_th_analisis_feto
+BEFORE INSERT 
+ON th_analisis_feto
+referencing new as new FOR EACH ROW 
+BEGIN 
+IF :NEW.id_th_a_f IS NULL THEN
+SELECT  TH_ANALISIS_FETO_ID_FETO_SEQ.nextval INTO:NEW.id_th_a_f from dual;
+END IF;
+END;

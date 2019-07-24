@@ -1,0 +1,9 @@
+create or replace TRIGGER pk_d_etnia
+BEFORE INSERT 
+ON D_ETNIA
+referencing new as new FOR EACH ROW 
+BEGIN 
+IF :NEW.ID_D_ETNIA IS NULL THEN
+SELECT D_ETNIA_ID_ETNIA_SEQ.nextval INTO:NEW.id_d_etnia from dual;
+END IF;
+END;

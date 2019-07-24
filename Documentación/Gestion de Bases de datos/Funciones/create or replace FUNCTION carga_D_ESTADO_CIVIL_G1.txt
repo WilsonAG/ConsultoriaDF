@@ -1,0 +1,23 @@
+create or replace FUNCTION carga_D_ESTADO_CIVIL_G1
+          RETURN number 
+          IS
+              cursor cur_ESTADO_CIVIL is
+                  select * from ESTADO_CIVIL
+                  where lower(ESTADO_CIVIL) not in (select lower(ESTADO_CIVIL) from D_ESTADO_CIVIL)
+                  order by ESTADO_CIVIL;
+              v_num_reg integer :=0;
+              rv_ESTADO_CIVIL ESTADO_CIVIL%ROWTYPE;
+
+          BEGIN
+            open cur_ESTADO_CIVIL; --carga de datos_etnia ejecuta el select 
+            fetch cur_ESTADO_CIVIL into rv_ESTADO_CIVIL;
+            while cur_ESTADO_CIVIL%found loop
+                insert into D_ESTADO_CIVIL(id_estado_civil, estado_civil)
+                    values(rv_estado_civil.id_estado_civil, rv_estado_civil.estado_civil);
+                v_num_reg :=v_num_reg +1;
+                fetch cur_ESTADO_CIVIL into rv_estado_civil;
+            end loop;
+            close cur_ESTADO_CIVIL;
+            commit;
+            return v_num_reg;
+          END;

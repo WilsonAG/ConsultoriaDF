@@ -1,0 +1,23 @@
+create or replace FUNCTION carga_D_INSTRUCCION_G2
+          RETURN number 
+          IS
+              cursor cur_INSTRUCCION is
+                  select * from NIVEL_INSTI
+                  where lower(NIVEL_INSTI) not in (select lower(NIVEL_INSTI) from d_instruccion)
+                  order by NIVEL_INSTI;
+              v_num_reg integer :=0;
+              rv_NIVEL_INSTI NIVEL_INSTI%ROWTYPE;
+
+          BEGIN
+            open cur_INSTRUCCION; --carga de datos_etnia ejecuta el select 
+            fetch cur_INSTRUCCION into rv_NIVEL_INSTI;
+            while cur_INSTRUCCION%found loop
+                insert into D_INSTRUCCION(id_nivel_insti, nivel_insti)
+                    values(rv_nivel_insti.id_nivel_insti, rv_nivel_insti.nivel_insti);
+                v_num_reg :=v_num_reg +1;
+                fetch cur_INSTRUCCION into rv_nivel_insti;
+            end loop;
+            close cur_INSTRUCCION;
+            commit;
+            return v_num_reg;
+          END;

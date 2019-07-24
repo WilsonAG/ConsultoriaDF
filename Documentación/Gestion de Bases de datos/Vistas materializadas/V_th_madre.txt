@@ -1,0 +1,25 @@
+  CREATE MATERIALIZED VIEW "P54G2_OLTP_DF"."V_TH_MADRE" ("Anio Trimestre Mes", "Prov Cant Parr", "Estado Civil", "Semana de Gestación", "Controles Prenatales", "Número Muertes")
+  ORGANIZATION HEAP PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TSP_GBD_4263" 
+  BUILD IMMEDIATE
+  USING INDEX 
+  REFRESH FORCE ON DEMAND
+  USING DEFAULT LOCAL ROLLBACK SEGMENT
+  USING ENFORCED CONSTRAINTS DISABLE QUERY REWRITE
+  AS SELECT 
+        (t.anio||' '|| NVL(t.trimestre,'')||' '||NVL(t.mes,'')) "Anio Trimestre Mes",
+        (NVL(u.provincia,'')||' '||NVL(u.canton,'')||' '||NVL(u.parroquia,''))"Prov Cant Parr",
+        NVL(ec.estado_civil,'')"Estado Civil",
+        th.sem_gest "Semana de Gestación",
+        decode(th.con_pren,99,'N-R',to_char(th.con_pren)) "Controles Prenatales",
+        th.n_muertes  "Número Muertes"
+    FROM th_analisis_madre th, d_tiempo t, d_ubicacion u, d_estado_civil ec
+    WHERE t.id_tiempo = th.id_tiempo
+    AND th.id_ubicacion = u.id_ubicacion 
+    AND th.id_estado_civil = ec.id_estado_civil;
+ 
+
+   COMMENT ON MATERIALIZED VIEW "P54G2_OLTP_DF"."V_TH_MADRE"  IS 'snapshot table for snapshot P54G2_OLTP_DF.V_TH_MADRE';
+ 

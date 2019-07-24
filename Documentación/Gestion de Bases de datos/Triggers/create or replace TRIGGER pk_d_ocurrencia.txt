@@ -1,0 +1,9 @@
+create or replace TRIGGER pk_d_ocurrencia
+BEFORE INSERT 
+ON D_L_OCURRENCIA
+referencing new as new FOR EACH ROW 
+BEGIN 
+IF :NEW.ID_D_OCURRENCIA IS NULL THEN
+SELECT D_LUGAR_FALLECIMIENTO_ID_OC411.nextval INTO:NEW.id_d_ocurrencia from dual;
+END IF;
+END;

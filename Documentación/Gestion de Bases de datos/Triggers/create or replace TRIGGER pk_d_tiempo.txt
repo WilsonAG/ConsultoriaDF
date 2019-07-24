@@ -1,0 +1,9 @@
+create or replace TRIGGER pk_d_tiempo
+BEFORE INSERT 
+ON D_tiempo
+referencing new as new FOR EACH ROW 
+BEGIN 
+IF :NEW.id_tiempo IS NULL THEN
+SELECT D_TIEMPO_ID_TIEMPO_SEQ.nextval INTO:NEW.id_tiempo from dual;
+END IF;
+END;

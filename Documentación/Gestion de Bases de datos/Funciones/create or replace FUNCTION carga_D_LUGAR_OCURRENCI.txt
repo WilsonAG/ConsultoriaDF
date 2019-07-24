@@ -1,0 +1,23 @@
+create or replace FUNCTION carga_D_LUGAR_OCURRENCIA_G2
+          RETURN number 
+          IS
+              cursor cur_OCURRENCIA is
+                  select * from OCURRENCIA
+                  where lower(OCURRENCIA) not in (select lower(OCURRENCIA) from D_L_OCURRENCIA)
+                  order by OCURRENCIA;
+              v_num_reg integer :=0;
+              rv_OCURRENCIA OCURRENCIA%ROWTYPE;
+
+          BEGIN
+            open cur_OCURRENCIA; --carga de datos_etnia ejecuta el select 
+            fetch cur_OCURRENCIA into rv_OCURRENCIA;
+            while cur_OCURRENCIA%found loop
+                insert into D_L_OCURRENCIA(id_ocurrencia, ocurrencia)
+                    values(rv_ocurrencia.id_ocurrencia, rv_ocurrencia.ocurrencia);
+                v_num_reg :=v_num_reg +1;
+                fetch cur_OCURRENCIA into rv_ocurrencia;
+            end loop;
+            close cur_OCURRENCIA;
+            commit;
+            return v_num_reg;
+          END;

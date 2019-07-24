@@ -1,0 +1,9 @@
+create or replace TRIGGER pk_d_ubicacion
+BEFORE INSERT 
+ON d_ubicacion
+referencing new as new FOR EACH ROW 
+BEGIN 
+IF :NEW.ID_UBICACION IS NULL THEN
+SELECT D_UBICACION_ID_UBICACION_SEQ.nextval INTO:NEW.ID_UBICACION from dual;
+END IF;
+END;

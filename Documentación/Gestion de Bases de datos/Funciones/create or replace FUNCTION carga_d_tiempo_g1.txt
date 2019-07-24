@@ -1,0 +1,33 @@
+create or replace FUNCTION carga_d_tiempo_g1
+   RETURN NUMBER IS
+        trim INTEGER:=0;
+        mes INTEGER:=0;
+        anio INTEGER:=2015;
+        n_reg INTEGER:=0;
+        reg_d_tiempo INTEGER:=0;
+BEGIN 
+select COUNT(*) into reg_d_tiempo FROM d_tiempo;
+if reg_d_tiempo > 1 THEN
+    DBMS_OUTPUT.put_line('Registros ya existen en la tabla');
+    return n_reg;
+end IF;    
+  WHILE mes <= 12 and anio <= 2016 LOOP
+        trim:= CEIL (mes/3);
+      IF mes=0 and trim=0 THEN
+            INSERT INTO d_tiempo (anio, trimestre, mes) VALUES (anio, null, null);
+            FOR i IN 1..4 LOOP
+                  INSERT INTO d_tiempo (anio, trimestre, mes) VALUES (anio, i, null);
+                END LOOP;
+        ELSE
+            INSERT INTO d_tiempo (anio, trimestre, mes) VALUES (anio, trim, mes);
+        END IF;
+        mes:= mes+1;
+
+        IF mes = 13 THEN
+              mes:=0;
+              anio:= anio + 1;
+            END IF;
+    END LOOP;     
+    DBMS_OUTPUT.put_line('Registros ingresados: '|| TO_CHAR(n_reg));
+  RETURN n_reg;
+END;

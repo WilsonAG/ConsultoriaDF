@@ -1,0 +1,23 @@
+create or replace FUNCTION carga_d_etinia_olap_G1
+          RETURN number 
+          IS
+              cursor cur_etnia is
+                  select * from etnia
+                  where lower(etnia) not in (select lower(etnia) from d_etnia)
+                  order by etnia;
+              v_num_reg integer :=0;
+              rv_etnia etnia%ROWTYPE;
+
+          BEGIN
+            open cur_etnia; --carga de datos_etnia ejecuta el select 
+            fetch cur_etnia into rv_etnia;
+            while cur_etnia%found loop
+                insert into d_etnia(id_etnia, etnia)
+                    values(rv_etnia.id_etnia, rv_etnia.etnia);
+                v_num_reg :=v_num_reg +1;
+                fetch cur_etnia into rv_etnia;
+            end loop;
+            close cur_etnia;
+            commit;
+            return v_num_reg;
+          END;

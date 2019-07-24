@@ -1,0 +1,9 @@
+create or replace TRIGGER pk_d_estado_civil
+BEFORE INSERT 
+ON d_estado_civil
+referencing new as new FOR EACH ROW 
+BEGIN 
+IF :NEW.ID_d_estado_civil IS NULL THEN
+SELECT D_ESTADO_CIVIL_ID_ESTADO_CI412.nextval INTO:NEW.id_d_estado_civil from dual;
+END IF;
+END;

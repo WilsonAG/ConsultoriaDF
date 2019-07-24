@@ -1,0 +1,72 @@
+create or replace function carga_d_ubicacion_G2
+RETURN NUMBER
+IS
+CURSOR CR_d_ubicacion_P IS
+    SELECT id_provincia, provincia from provincia
+        where lower(id_provincia) not in (
+            SELECT lower(ID_PROVINCIA) from d_ubicacion)
+                order by id_provincia ;
+
+CURSOR CR_d_ubicacion_C IS
+     SELECT P.id_provincia, P.provincia,C.id_canton, C.canton
+     from provincia P, canton C
+        where P.id_provincia=C.id_provincia
+        AND
+      (C.canton || p.provincia) not in (
+       SELECT (canton||provincia) from d_ubicacion)
+                order by C.id_provincia, c.id_canton ;
+
+CURSOR CR_d_ubicacion_PA IS
+     SELECT P.id_provincia, P.provincia,C.id_canton, C.canton, 
+     PA.id_parroquia, pa.parroquia
+     from provincia P, canton C, parroquia PA
+        where P.id_provincia=C.id_provincia
+        AND C.id_provincia=PA.id_provincia
+        AND C.id_canton=PA.id_canton
+        AND
+         (PA.parroquia||C.canton || P.provincia) not in (
+       SELECT (parroquia||canton||provincia)from d_ubicacion)
+                order by C.id_provincia, c.id_canton,pa.id_parroquia ;
+
+    rv_ub_p  CR_d_ubicacion_P%ROWTYPE;
+    rv_ub_c CR_d_ubicacion_C%ROWTYPE;
+    rv_ub_pa CR_d_ubicacion_PA%ROWTYPE;
+    v_ub_reg integer:=0;
+
+BEGIN
+open CR_d_ubicacion_P;
+fetch CR_d_ubicacion_P into rv_ub_p;
+
+while CR_d_ubicacion_P%found loop
+    insert into d_ubicacion(ID_PROVINCIA,ID_CANTON,ID_PARROQUIA,provincia,canton, parroquia)
+        values(rv_ub_p.id_provincia,NULL,NULL,rv_ub_p.provincia,NULL,NULL);
+    fetch CR_d_ubicacion_P into rv_ub_p;
+    v_ub_reg:=v_ub_reg+1;
+end loop;
+close CR_d_ubicacion_P;
+--------------------------FIN CARGA PROV-----------------------------------
+open CR_d_ubicacion_C;
+fetch CR_d_ubicacion_C into rv_ub_c;
+
+while CR_d_ubicacion_C%found loop
+    insert into d_ubicacion(ID_PROVINCIA,ID_CANTON,ID_PARROQUIA,provincia,canton, parroquia)
+        values(rv_ub_c.id_provincia,rv_ub_c.id_canton,NULL,rv_ub_c.provincia,rv_ub_c.canton,NULL);
+    fetch CR_d_ubicacion_C into rv_ub_c;
+    v_ub_reg:=v_ub_reg+1;
+end loop;
+close CR_d_ubicacion_C;
+-----------------FIN CARGA CANTON------------------
+open CR_d_ubicacion_PA;
+fetch CR_d_ubicacion_PA into rv_ub_pa;
+
+while CR_d_ubicacion_PA%found loop
+    insert into d_ubicacion(ID_PROVINCIA,ID_CANTON,ID_PARROQUIA,provincia,canton, parroquia)
+        values(rv_ub_pa.id_provincia,rv_ub_pa.id_canton,rv_ub_pa.id_parroquia,rv_ub_pa.provincia,rv_ub_pa.canton,rv_ub_pa.parroquia);
+    fetch CR_d_ubicacion_PA into rv_ub_pa;
+    v_ub_reg:=v_ub_reg+1;
+end loop;
+close CR_d_ubicacion_PA;
+
+commit;
+return (v_ub_reg);
+end;

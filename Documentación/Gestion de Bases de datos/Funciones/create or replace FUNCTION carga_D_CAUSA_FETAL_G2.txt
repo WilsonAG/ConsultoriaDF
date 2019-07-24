@@ -1,0 +1,23 @@
+create or replace FUNCTION carga_D_CAUSA_FETAL_G2
+          RETURN number 
+          IS
+              cursor cur_CAUSA_FETAL is
+                  select * from CAUSA_FETAL
+                  where lower(CAUSA_FETAL) not in (select lower(CAUSA_FETAL) from D_CAUSA_FETAL)
+                  order by CAUSA_FETAL;
+              v_num_reg integer :=0;
+              rv_CAUSA_FETAL CAUSA_FETAL%ROWTYPE;
+
+          BEGIN
+            open cur_CAUSA_FETAL; --carga de datos_etnia ejecuta el select 
+            fetch cur_CAUSA_FETAL into rv_CAUSA_FETAL;
+            while cur_CAUSA_FETAL%found loop
+                insert into D_CAUSA_FETAL(id_causa_fetal, causa_fetal)
+                    values(rv_causa_fetal.id_causa_fetal, rv_causa_fetal.causa_fetal);
+                v_num_reg :=v_num_reg +1;
+                fetch cur_CAUSA_FETAL into rv_causa_fetal;
+            end loop;
+            close cur_CAUSA_FETAL;
+            commit;
+            return v_num_reg;
+          END;

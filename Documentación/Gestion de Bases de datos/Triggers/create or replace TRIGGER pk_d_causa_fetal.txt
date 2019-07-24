@@ -1,0 +1,9 @@
+create or replace TRIGGER pk_d_causa_fetal
+BEFORE INSERT 
+ON d_causa_fetal
+referencing new as new FOR EACH ROW 
+BEGIN 
+IF :NEW.ID_D_C_FETAL IS NULL THEN
+SELECT D_CAUSA_FETAL_ID_CAUSA_FETA918.nextval INTO:NEW.ID_D_C_FETAL from dual;
+END IF;
+END;

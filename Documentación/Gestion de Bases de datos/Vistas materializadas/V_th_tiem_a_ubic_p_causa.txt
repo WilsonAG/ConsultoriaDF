@@ -1,0 +1,22 @@
+  CREATE MATERIALIZED VIEW "P54G2_OLTP_DF"."V_TH_TIEM_A_UBIC_P_CAUSA" ("Año", "Provincia", "Causa Fetal", "Número de muertes")
+  ORGANIZATION HEAP PCTFREE 10 PCTUSED 40 INITRANS 1 MAXTRANS 255 NOCOMPRESS LOGGING
+  STORAGE(INITIAL 65536 NEXT 1048576 MINEXTENTS 1 MAXEXTENTS 2147483645
+  PCTINCREASE 0 FREELISTS 1 FREELIST GROUPS 1 BUFFER_POOL DEFAULT FLASH_CACHE DEFAULT CELL_FLASH_CACHE DEFAULT)
+  TABLESPACE "TSP_GBD_4263" 
+  BUILD IMMEDIATE
+  USING INDEX 
+  REFRESH FORCE ON DEMAND
+  USING DEFAULT LOCAL ROLLBACK SEGMENT
+  USING ENFORCED CONSTRAINTS DISABLE QUERY REWRITE
+  AS select tiem.anio "Año", ub.provincia
+  "Provincia",cf.causa_fetal "Causa Fetal",sum (N_MUERTES) "Número de muertes"
+from TH_ANALISIS_FETO th, d_tiempo tiem, d_ubicacion ub, D_CAUSA_FETAL cf
+where (to_number(th.id_tiempo) = tiem.id_tiempo and tiem.id_tiempo in (select id_tiempo from d_tiempo where mes is null))
+and th.id_ubicacion = ub.id_ubicacion
+and th.id_d_c_fetal = cf.id_d_c_fetal
+GROUP BY tiem.anio, ub.provincia,cf.causa_fetal
+;
+ 
+
+   COMMENT ON MATERIALIZED VIEW "P54G2_OLTP_DF"."V_TH_TIEM_A_UBIC_P_CAUSA"  IS 'snapshot table for snapshot P54G2_OLTP_DF.V_TH_TIEM_A_UBIC_P_CAUSA';
+ 
