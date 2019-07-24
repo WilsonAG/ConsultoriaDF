@@ -29,7 +29,7 @@ public class ControlLogin implements Serializable{
 			
 			Usuario userBD = user.buscarUsuario(user);			
 			if (userBD != null) {
-				url = "/admin/menu_administrador.xhtml?faces-redirect=true";		
+				url = "/admin/index.xhtml?faces-redirect=true";		
 				ControlSession.getSession(true);
 				ControlSession.add("nameUser", userBD.getNombre());
 				String n = (String) ControlSession.get("nameUser");

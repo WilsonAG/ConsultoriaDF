@@ -25,6 +25,7 @@
 		<p:submenu label="Consultas">
 			<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
 			<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+			<p:menuitem value="Top Defunciones por estado civil" url="top_civil.jsf"/>
 		</p:submenu>
 		<p:submenu label="Administrador">
 			<p:menuitem value="Crear usuarios" url="ingreso_usuario.jsf" />
@@ -45,14 +46,14 @@
 				<p:outputLabel style="font-weight: bold;">Periodo de analisis tiempo</p:outputLabel>
 				<br></br>
 				<p:outputLabel for="console" value="años:" />
-				<p:selectOneRadio id="console" value="#{radioView.console}"
+				<p:selectOneRadio id="console" value="#{data.anio}"
 					unselectable="true">
 					<f:selectItem itemLabel="2015" itemValue="2015" />
 					<f:selectItem itemLabel="2016" itemValue="2016" />
 				</p:selectOneRadio>
 				<p:outputLabel value="Trimestre: " />
 				<br></br>
-				<p:selectOneMenu>
+				<p:selectOneMenu value="#{data.trimestre}">
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
 					<f:selectItem itemLabel="1" itemValue="1" />
 					<f:selectItem itemLabel="2" itemValue="2" />
@@ -65,97 +66,77 @@
 				<p:outputLabel style="font-weight: bold">Ubicacion</p:outputLabel>
 				<br></br>
 				<p:outputLabel value="Provincia" />
-				<p:selectOneMenu id="prov" value="#{data.provincia}">
+				<p:selectOneMenu id="prov" value="#{data.provincia}" required="true">
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
 					<f:selectItems value="#{data.provincias}" var="provs"
 						itemLabel="#{provs.nombre}" itemValue="#{provs.id_provincia}" />
-					<p:ajax event="change" listener="#{data.obtenerCantones()}"
-						update="cant" />
 				</p:selectOneMenu>
 
-				<p:outputLabel value="Canton" />
-				<p:selectOneMenu id="cant" value="#{data.canton}">
-					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
-					<f:selectItems value="#{data.cantones}" var="cants"
-						itemLabel="#{cants.nombre}" itemValue="#{cants.id_canton}" />
-					<p:ajax event="change" listener="#{data.obtenerParroquias()}"
-						update="parr" />
-				</p:selectOneMenu>
+				<!-- carga canton -->
 
-				<p:outputLabel value="Parroquia" />
-				<p:selectOneMenu id="parr">
-					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
-					<f:selectItems value="#{data.parroquias}" var="parrs"
-						itemLabel="#{parrs.nombre}" itemValue="#{parrs.id_parroquia}" />
-				</p:selectOneMenu>
+				<!-- 				<p:outputLabel value="Canton" /> -->
+				<!-- 				<p:selectOneMenu id="cant" value="#{data.canton}"> -->
+				<!-- 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" /> -->
+				<!-- 					<f:selectItems value="#{data.cantones}" var="cants" -->
+				<!-- 						itemLabel="#{cants.nombre}" itemValue="#{cants.id_canton}" /> -->
+				<!-- 					<p:ajax event="change" listener="#{data.obtenerParroquias()}" /> -->
+				<!-- 				</p:selectOneMenu> -->
+
 			</p:column>
 
-			<p:column>
-				<p:outputLabel style="font-weight: bold">Eje de analisis</p:outputLabel>
-				<br></br>
-				<p:outputLabel value="Estado civil" />
-				<p:selectOneMenu id="estCiv" value="#{data.est_civil}">
-					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
-					<f:selectItems value="#{data.estados_civiles}" var="civil"
-						itemLabel="#{civil.nombre}" itemValue="#{civil.id_estCivil}" />
-				</p:selectOneMenu>
-			</p:column>
+
+
+			<!-- carga estado civil -->
+			<!-- 			<p:column> -->
+			<!-- 				<p:outputLabel style="font-weight: bold">Eje de analisis</p:outputLabel> -->
+			<!-- 				<br></br> -->
+			<!-- 				<p:outputLabel value="Estado civil" /> -->
+			<!-- 				<p:selectOneMenu id="estCiv" value="#{data.est_civil}"> -->
+			<!-- 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" /> -->
+			<!-- 					<f:selectItems value="#{data.estados_civiles}" var="civil" -->
+			<!-- 						itemLabel="#{civil.nombre}" itemValue="#{civil.id_estCivil}" /> -->
+			<!-- 				</p:selectOneMenu> -->
+			<!-- 			</p:column> -->
 
 		</p:panelGrid>
 
-
-		<table class="egt">
-
-
-
-
-
-
-			<tr>
-
-				<td></td>
-
-
-
-			</tr>
-
-			<tr>
-
-				<td></td>
-
-				<td></td>
-
-
-
-			</tr>
-
-		</table>
-
-
+		<p:commandButton actionListener="#{data.consultaMadre()}"
+			value="Consultar" update="tbConsulta" />
 
 		<h3>Muestra de los datos:</h3>
-		<p:dataTable var="car" value="#{dtBasicView.cars}">
-			<p:column headerText="trimestre">
-				<h:outputText value="#{car.id}" />
+		<p:dataTable id="tbConsulta" value="#{data.registros}" var="r">
+			<p:column headerText="Anio">
+				<h:outputText value="#{r.anio}" />
 			</p:column>
 
-			<p:column headerText="anio">
-				<h:outputText value="#{car.year}" />
+			<p:column headerText="Trimestre">
+				<h:outputText value="#{r.trim}" />
 			</p:column>
 
-			<p:column headerText="estado civil">
-				<h:outputText value="#{car.brand}" />
+			<p:column headerText="Provincia - Canton">
+				<h:outputText value="#{r.ubic}" />
 			</p:column>
 
-			<p:column headerText="Numero total ">
-				<h:outputText value="#{car.color}" />
+			<p:column headerText="Estado Civil ">
+				<h:outputText value="#{r.estado_civil}" />
+			</p:column>
+
+			<p:column headerText="Cantidad Fallecidos ">
+				<h:outputText value="#{r.fallecidos}" />
 			</p:column>
 		</p:dataTable>
 
 		<h3>Graficas de los datos:</h3>
 
-		<h2>Vistas Materializadas</h2>
 
+
+		<p:commandButton id="btnPastel" value="Grafico Pastel" type="button"
+			 />
+		<p:overlayPanel id="panelPastel" for="btnPastel" hideEffect="fade"
+			dynamic="true" style="width:1200px" modal="true">
+			<p:chart id="graf" type="pie" model="#{data.modeloGrafico}"
+				style="height:300px" />
+		</p:overlayPanel>
 	</h:form>
 
 </body>

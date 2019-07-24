@@ -1,6 +1,7 @@
 package Control;
 
 import java.io.Serializable;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -9,12 +10,17 @@ import javax.annotation.PostConstruct;
 import javax.faces.view.ViewScoped;
 import javax.inject.Named;
 
+import org.primefaces.model.chart.CartesianChartModel;
+import org.primefaces.model.chart.PieChartModel;
+import org.primefaces.model.charts.bar.BarChartModel;
+
 import Conexion.Conexion;
 import Model.Canton;
 import Model.CausaFetal;
 import Model.EstadoCivil;
 import Model.Parroquia;
 import Model.Provincia;
+import Model.RegistroAnalisis;
 
 @Named("data")
 @ViewScoped
@@ -37,6 +43,7 @@ public class controlDatos implements Serializable {
 	private static int anio;
 	private static int trimestre;
 	private static int resp=0;
+	private ArrayList<RegistroAnalisis> registros;
 
 	@PostConstruct
 	public void init() {
@@ -195,6 +202,67 @@ public class controlDatos implements Serializable {
 
 	}
 
+	
+	public void consultaMadre() {
+		
+		String sql = "SELECT t.anio, t.trimestre , u.provincia||' '||u.canton , civ.estado_civil , sum(th.n_muertes) "
+				+ "FROM th_analisis_madre th, d_tiempo t, d_ubicacion u, d_estado_civil civ "
+				+ "WHERE (to_number(th.id_tiempo) = t.id_tiempo and t.id_tiempo in (select id_tiempo from d_tiempo where mes is null)) "
+				+ "AND th.id_ubicacion = u.id_ubicacion "
+				+ "AND th.id_estado_civil = civ.id_estado_civil "
+				+ "and t.anio="+anio+" and t.trimestre="+trimestre+" and u.id_provincia="+provincia+" "
+				+ "GROUP BY t.anio, t.trimestre, u.provincia,u.canton, civ.estado_civil ";
+		
+		ResultSet rs = null;
+		registros = new ArrayList<RegistroAnalisis>();
+		try {
+			Conexion con = new Conexion();
+			rs = con.ejecutarQuery(sql);
+			while (rs.next()) {
+				RegistroAnalisis ra = new RegistroAnalisis();
+				ra.setAnio(rs.getInt(1));
+				ra.setTrim(rs.getInt(2));
+				ra.setUbic(rs.getString(3));
+				ra.setEstado_civil(rs.getString(4));
+				ra.setFallecidos(rs.getInt(5));
+				registros.add(ra);
+			}
+			
+			con.cerrarConexion();
+			
+			graficoBarras();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	private PieChartModel modeloGrafico;
+	
+	
+	public void graficoBarras() {
+		modeloGrafico = new PieChartModel();
+		String prov = "";
+		for (RegistroAnalisis reg : registros) {
+			modeloGrafico.set(reg.getEstado_civil(), reg.getFallecidos());
+			prov = reg.getUbic();
+		}
+		
+		modeloGrafico.setTitle("Anio "+anio+" - Trimestre "+trimestre+" Provincia "+prov);
+		modeloGrafico.setShowDataLabels(true);
+		
+	}
+	
+	public PieChartModel getModeloGrafico() {
+		return modeloGrafico;
+	}
+	
+	public void setModeloGrafico(PieChartModel modeloGrafico) {
+		this.modeloGrafico = modeloGrafico;
+	}
+	
+
+	
 	public int getProvincia() {
 		return provincia;
 	}
@@ -301,5 +369,14 @@ public class controlDatos implements Serializable {
 	public void setResp(int resp) {
 		this.resp = resp;
 	}
+	
+	public ArrayList<RegistroAnalisis> getRegistros() {
+		return registros;
+	}
+	
+	public void setRegistros(ArrayList<RegistroAnalisis> registros) {
+		this.registros = registros;
+	}
+	
 	
 }

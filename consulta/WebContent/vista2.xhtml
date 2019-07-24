@@ -8,10 +8,9 @@
 
 
 <h:body>
-	
+
 
 	<h:form>
-
 		<!-- 		<p:growl id="msgs" showDetail="true" /> -->
 		<p:panel header="TOP DEFUNCIONES FETALES SEGUN CAUSA FETAL">
 			<h:selectOneRadio value="#{vm1.top}">
@@ -21,8 +20,7 @@
 			</h:selectOneRadio>
 
 
-			<h:commandButton actionListener="#{vm1.generar()}"
-				value="Registrar" />
+			<h:commandButton actionListener="#{vm1.generar()}" value="Registrar" />
 			<br />
 			<br></br>
 			<p:dataTable value="#{vm1.vm}" var="us">

@@ -9,11 +9,17 @@
 	<style>
 <!--
 fondo
+
  
+
 de
+
  
+
 pantalla
+
  
+
 
 -->
 </style>
@@ -22,7 +28,7 @@ pantalla
 </h:head>
 <body style="background-color: #7C8585;">
 	<h:form>
-	 <p:growl id="msgs" showDetail="true" sticky="true" /> 
+		<p:growl id="msgs" showDetail="true" sticky="true" />
 
 		<p:menubar id="menu">
 			<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
@@ -31,10 +37,13 @@ pantalla
 			<p:submenu label="Consultas">
 				<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
 				<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+				<p:menuitem value="Top Defunciones por estado civil"
+					url="top_civil.jsf" />
+
 			</p:submenu>
-		<p:submenu label="Administrador">
-			<p:menuitem value="Crear usuarios" url="ingreso_usuario.jsf" />
-		</p:submenu>
+			<p:submenu label="Administrador">
+				<p:menuitem value="Crear usuarios" url="ingreso_usuario.jsf" />
+			</p:submenu>
 
 			<f:facet name="options">
 				<p:button value="Logout" outcome="#{login.cerrarSesion()}" />

@@ -1,11 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:f="http://java.sun.com/jsf/core"
-      xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui" 
-      >
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
 
-	 <h:head>
+<h:head>
 	<title>Consulta Feto</title>
 	<style type="text/css">
 .value {
@@ -27,6 +26,9 @@
 		<p:submenu label="Consultas">
 			<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
 			<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+			<p:menuitem value="Top Defunciones por estado civil"
+				url="top_civil.jsf" />
+
 		</p:submenu>
 
 		<f:facet name="options">
@@ -70,14 +72,14 @@
 					<f:selectItems value="#{data.provincias}" var="provs"
 						itemLabel="#{provs.nombre}" itemValue="#{provs.id_provincia}" />
 					<p:ajax event="change" listener="#{data.obtenerCantones}"
-						update="cant"/>
+						update="cant" />
 				</p:selectOneMenu>
 				<p:outputLabel value="Canton" />
 				<p:selectOneMenu id="cant" value="#{data.canton}">
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
 					<f:selectItems value="#{data.cantones}" var="cants"
 						itemLabel="#{cants.nombre}" itemValue="#{cants.id_canton}" />
-					
+
 				</p:selectOneMenu>
 
 			</p:column>
@@ -89,46 +91,19 @@
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
 					<f:selectItems value="#{data.causas_fetales}" var="causa"
 						itemLabel="#{causa.nombre}" itemValue="#{causa.id_causa_fetal}" />
-						
+
 				</p:selectOneMenu>
 			</p:column>
 
 		</p:panelGrid>
 
 
-		<table class="egt">
 
-
-
-
-
-
-			<tr>
-
-				<td></td>
-
-
-
-			</tr>
-
-			<tr>
-
-				<td></td>
-
-				<td></td>
-
-
-
-			</tr>
-
-		</table>
-
-
-<h:commandButton  action="#{data.numeroMuertes()}" value="Consultar" />
+		<h:commandButton action="#{data.numeroMuertes()}" value="Consultar" />
 		<h3>Muestra de los datos:</h3>
 		<p:dataTable var="car" value="#">
 			<p:column headerText="trimestre">
-		
+
 				<h:outputText value="#{data.trimestre}" />
 			</p:column>
 

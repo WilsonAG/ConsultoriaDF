@@ -10,76 +10,87 @@
 <!--
 fondo
 
+
+
 de
+
  
+
 pantalla
+
+
 
 -->
 </style>
-<link rel="stylesheet" href="resources/estilo.css" />
+	<link rel="stylesheet" href="resources/estilo.css" />
 </h:head>
 <body style="background-color: #7C8585;">
-<center>
-	<h:form id="form">
-		<p:growl id="messages" />
-
-		<p:menubar>
-			<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
-			<p:menuitem value="Informacion" url="informacion.jsf"
-				icon="pi pi-times" />
-			<p:menuitem value="Consulta" url="consulta_general.jsf" />
-
-
-			<f:facet name="options">
-				<h:button value="LogIn" outcome="login" />
-				<!-- 				<p:commandButton value="Logout" action="login.jsf" icon="pi pi-home" /> -->
-			</f:facet>
-		</p:menubar>
-
-
-	</h:form>
 	<center>
-	<h:form>
-		
+		<h:form id="form">
+			<p:growl id="msgs" showDetail="true" sticky="true" life="2000" />
 
-		<p:messages id="msgs" closable="true" showDetail="true">
-			<p:autoUpdate />
-		</p:messages>
-		<h:panelGrid  styleClass="panelGridCenter"  class="marge" cellpadding="5" >
-			<center><h:outputText value="Usuario o correo " /></center>
-			<p:inputText  required="true" label="email" size="40"
-				requiredMessage="Porfavor ingresa tu direccion de correo."
-				validatorMessage="Formato de correo no valido"
-				value="#{login.user.email}">
-
-				<f:validateRegex
-					pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
-
-			</p:inputText>
-			
-
-			<h:outputText    value="Contrasenia: " />
-			<center><p:password  value="#{login.user.password}"
-				 required="true"
-				requiredMessage="Ingrese su clave" /></center>
-		</h:panelGrid>
-		
-		
-
-	
-
-		<p:separator />
-
-		<p:commandButton value="Ingresar" 
-			action="#{login.iniciarSesion()}" icon="ui-icon-key" />
+			<p:menubar>
+				<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
+				<p:menuitem value="Informacion" url="informacion.jsf"
+					icon="pi pi-times" />
+				<p:menuitem value="Consulta" url="consulta_general.jsf" />
 
 
-	</h:form>
+				<f:facet name="options">
+					<h:button value="LogIn" outcome="login" />
+					<!-- 				<p:commandButton value="Logout" action="login.jsf" icon="pi pi-home" /> -->
+				</f:facet>
+			</p:menubar>
+
+
+		</h:form>
+		<center>
+			<h:form>
+
+
+				<p:messages id="msgs" closable="true" showDetail="true">
+					<p:autoUpdate />
+				</p:messages>
+				<h:panelGrid styleClass="panelGridCenter" class="marge"
+					cellpadding="5">
+					<center>
+						<h:outputText value="Usuario o correo " />
+					</center>
+					<p:inputText required="true" label="email" size="40"
+						requiredMessage="Porfavor ingresa tu direccion de correo."
+						validatorMessage="Formato de correo no valido"
+						value="#{login.user.email}">
+
+						<f:validateRegex
+							pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+
+					</p:inputText>
+
+
+					<h:outputText value="Contrasenia: " />
+					<center>
+						<p:password value="#{login.user.password}" required="true"
+							requiredMessage="Ingrese su clave" />
+					</center>
+				</h:panelGrid>
+
+
+
+
+
+				<p:separator />
+
+				<p:commandButton value="Ingresar" action="#{login.iniciarSesion()}"
+					icon="ui-icon-key" />
+
+
+			</h:form>
+		</center>
+		<center>
+			<p:commandButton value="Regresar" onclick="window.history.back();"
+				type="button" ajax="false" />
+		</center>
 	</center>
-	<center><p:commandButton value="Regresar" onclick="window.history.back();"
-		type="button" ajax="false" />
-		</center>
-		</center>
 </body>
 
 

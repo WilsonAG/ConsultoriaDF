@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Consulta base</title>
+	<style type="text/css">
+.value {
+	font-weight: bold;
+}
+</style>
+	<link rel="stylesheet" href="resources/estilo.css" />
+
+</h:head>
+<body style="background-color: #7C8585;">
+
+	<p:growl id="messages" />
+
+	<p:menubar>
+		<p:menuitem value="Inicio" url="index.jsf" icon="pi pi-times" />
+		<p:menuitem value="Informacion" url="informacion.jsf"
+			icon="pi pi-times" />
+		<p:submenu label="Consultas">
+			<p:menuitem value="Consulta Madre" url="consulta_madre.jsf" />
+			<p:menuitem value="Consulta Feto" url="consulta_feto.jsf" />
+			<p:menuitem value="Top Defunciones por estado civil"
+				url="top_civil.jsf" />
+		</p:submenu>
+		<p:submenu label="Administrador">
+			<p:menuitem value="Crear usuarios" url="ingreso_usuario.jsf" />
+		</p:submenu>
+
+		<f:facet name="options">
+			<p:button value="Logout" outcome="#{login.cerrarSesion()}" />
+
+		</f:facet>
+	</p:menubar>
+
+	<h:form>
+		<h1>Top Defunciones fetales segun estado civil de la madre</h1>
+		<p:outputLabel style="font-weight:bold;">Seleccione el top:</p:outputLabel>
+		<p:selectOneRadio value="#{top.valor}">
+			<f:selectItem itemValue="3" itemLabel="3" />
+			<f:selectItem itemValue="10" itemLabel="10" />
+			<f:selectItem itemValue="20" itemLabel="20" />
+		</p:selectOneRadio>
+
+		<p:commandButton actionListener="#{top.consultar()}" value="Registrar"
+			update="tops" />
+
+		<p:dataTable id="tops" var="reg" value="#{top.regs}">
+			<p:column headerText="Anio">
+				<p:outputLabel value="#{reg.anio}" />
+			</p:column>
+
+			<p:column headerText="Provincia">
+				<p:outputLabel value="#{reg.ubic}" />
+			</p:column>
+
+			<p:column headerText="Estado Civil">
+				<p:outputLabel value="#{reg.estado_civil}" />
+			</p:column>
+
+			<p:column headerText="Fallecidos">
+				<p:outputLabel value="#{reg.fallecidos}" />
+			</p:column>
+
+		</p:dataTable>
+	</h:form>
+</body>
+</html>

@@ -16,6 +16,10 @@ import Model.CAUSA_F1;
 public class VM_Causa1 implements Serializable{
 
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private ArrayList<CAUSA_F1>vm;
 	private static int top=0;
 
