@@ -44,7 +44,7 @@
 			<p:column>
 				<p:outputLabel style="font-weight: bold;">Periodo de analisis tiempo</p:outputLabel>
 				<br></br>
-				<p:outputLabel for="console" value="aÃ±os:" />
+				<p:outputLabel for="console" value="anio:" />
 				<p:selectOneRadio id="console" value="#{data.anio}"
 					unselectable="true">
 					<f:selectItem itemLabel="2015" itemValue="2015" />
@@ -77,16 +77,9 @@
 					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
 					<f:selectItems value="#{data.cantones}" var="cants"
 						itemLabel="#{cants.nombre}" itemValue="#{cants.id_canton}" />
-					<p:ajax event="change" listener="#{data.obtenerParroquias()}"
-						update="parr" />
+					
 				</p:selectOneMenu>
 
-				<p:outputLabel value="Parroquia" />
-				<p:selectOneMenu id="parr">
-					<f:selectItem itemLabel="Seleccione..." itemDisabled="true" />
-					<f:selectItems value="#{data.parroquias}" var="parrs"
-						itemLabel="#{parrs.nombre}" itemValue="#{parrs.id_parroquia}" />
-				</p:selectOneMenu>
 			</p:column>
 			<p:column>
 				<p:outputLabel style="font-weight: bold">Eje de analisis</p:outputLabel>
@@ -131,7 +124,7 @@
 		</table>
 
 
-<h:commandButton  action="#{data.consultar_datos_feto()}" value="Consultar" />
+<h:commandButton  action="#{data.numeroMuertes()}" value="Consultar" />
 		<h3>Muestra de los datos:</h3>
 		<p:dataTable var="car" value="#">
 			<p:column headerText="trimestre">
@@ -148,7 +141,7 @@
 			</p:column>
 
 			<p:column headerText="Numero total ">
-				<h:outputText value="#" />
+				<h:outputText value="#{data.resp}" />
 			</p:column>
 		</p:dataTable>
 
